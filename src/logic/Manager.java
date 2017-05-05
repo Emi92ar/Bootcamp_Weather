@@ -79,13 +79,13 @@ public class Manager {
 	
 	// Will return the information from the URL. It is not a void method
 	public void AskForYahooForecast(String city){
-		try{
-			json = new URL("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22nome%2C%20ak%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys");
-			
-		}
-		catch (MalformedURLException e) {
-		    System.out.println("Hubo un error con el link");		
-		}
+//		try{
+//			json = new URL("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22nome%2C%20ak%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys");
+//			
+//		}
+//		catch (MalformedURLException e) {
+//		    System.out.println("Hubo un error con el link");		
+//		}
 		//ObjectMapper mapper = new ObjectMapper();
 	}
 	//With this method I want parse the information provided by Yahoo URL
@@ -152,7 +152,7 @@ public class Manager {
 		for(int i = 0 ; i < 5 ; i++){
 			System.out.println(forecast.getDay(i));
 		}
-		System.out.println(json);
+//		System.out.println(json);
 	}
 	
 	public void DataBase()  {

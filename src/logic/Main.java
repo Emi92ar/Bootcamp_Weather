@@ -9,7 +9,7 @@ public class Main
     {
         Actualday.Location location = new Actualday.Location("Cordoba");
         Manager manager = new Manager(location);
-       // manager.PrintInformation();
+        manager.PrintInformation();
     }
 }
 

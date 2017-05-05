@@ -6,34 +6,34 @@ package logic;
  * @version 24/04/2017
  */
 public class Day {
-	private float TempMax;
-	private float TempMin;
-	private String Day;
+	private float tempmax;
+	private float tempmin;
+	private String day;
 	
 	//Class constructor 
-	public Day(float TempMax, float TempMin, String Day){
-		this.TempMax = TempMax;
-		this.TempMin = TempMin;
-		this.Day = Day;
+	public Day(float tempmax, float tempmin, String day){
+		this.tempmax = tempmax;
+		this.tempmin = tempmin;
+		this.day = day;
 	}
 	
 	public float getTempMax() {
-		return TempMax;
+		return tempmax;
 	}
 	public void setTempMax(float tempMax) {
-		TempMax = tempMax;
+		tempmax = tempMax;
 	}
 	public float getTempMin() {
-		return TempMin;
+		return tempmin;
 	}
 	public void setTempMin(float tempMin) {
-		TempMin = tempMin;
+		tempmin = tempMin;
 	}
 	public String getDay() {
-		return Day;
+		return day;
 	}
 	public void setDay(String day) {
-		Day = day;
+		day = day;
 	}
 	
 	public String toString(){

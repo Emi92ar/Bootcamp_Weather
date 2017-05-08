@@ -1,4 +1,7 @@
 package logic;
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -58,8 +61,8 @@ public class Manager {
 
 	private String _user = "root"; 
 	private String _pwd = "root";
-	private static String _bd = "weather";
-	static String _url = "jdbc:mysql://localhost:3306/" + _bd;
+	private static String _bd = "weatherr";
+	static String _url = "jdbc:mysql://localhost:3306/" /*+ _bd*/;
 	private Connection conn = null;
 	
 	public Manager(Actualday.Location city_city){
@@ -143,61 +146,58 @@ public class Manager {
 	}
 	
 	public void PrintInformation(){
-		System.out.println(actual); 
-		System.out.println(location);
-		System.out.println(wind);
-		System.out.println(atmosphere);
-		System.out.println(astronomy);
-		System.out.println("\nInformation about Forecast");
-		for(int i = 0 ; i < 5 ; i++){
-			System.out.println(forecast.getDay(i));
-		}
+//		System.out.println(actual); 
+//		System.out.println(location);
+//		System.out.println(wind);
+//		System.out.println(atmosphere);
+//		System.out.println(astronomy);
+//		System.out.println("\nInformation about Forecast");
+//		for(int i = 0 ; i < 5 ; i++){
+//			System.out.println(forecast.getDay(i));
+//		}
 //		System.out.println(json);
 	}
 	
 	public void DataBase()  {
 		try
-		{
-		   Class.forName("com.mysql.jdbc.Driver");
-		   conn = (Connection) DriverManager.getConnection(_url, _user, _pwd);
-		   if(conn != null){
-			   System.out.println("Connected to the database " + _url + " correctly.");
-		   }
-		   //Crea un objeto SQLServerStatement para enviar instrucciones SQL a la base de datos
-		   Statement st = (Statement) conn.createStatement();
-		   //Creo la tabla si no existe
-		   st.executeUpdate("CREATE TABLE IF NOT EXISTS Location (id_location INT AUTO_INCREMENT, city_name VARCHAR(20), longitude VARCHAR(20), latitude VARCHAR(20), PRIMARY KEY(id_location))");
-		   st.executeUpdate("CREATE TABLE IF NOT EXISTS Actualday (date VARCHAR(20)	NOT NULL, PRIMARY KEY(date))");
-		   st.executeUpdate("CREATE TABLE IF NOT EXISTS Actualday_Location (date VARCHAR(20) NOT NULL, id_location INT AUTO_INCREMENT NOT NULL, PRIMARY KEY(id_location, date))");
-		   st.executeUpdate("CREATE TABLE IF NOT EXISTS Wind (id_wind INT AUTO_INCREMENT, date VARCHAR(20) NOT NULL, id_location INT NOT NULL ,chill VARCHAR(20), direction VARCHAR(20), speed VARCHAR(20), PRIMARY KEY(id_wind),   FOREIGN KEY (date) REFERENCES Actualday (date)ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (id_location) REFERENCES Location (id_location)ON DELETE CASCADE ON UPDATE CASCADE)");
-		   st.executeUpdate("CREATE TABLE IF NOT EXISTS Atmosphere (id_atmos INT AUTO_INCREMENT, date VARCHAR(20) NOT NULL, id_location INT NOT NULL, humidity VARCHAR(20), pressure VARCHAR(20), rising VARCHAR(20), visibility VARCHAR(20), PRIMARY KEY(id_atmos),   FOREIGN KEY (date) REFERENCES Actualday (date)ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (id_location) REFERENCES Location (id_location)ON DELETE CASCADE ON UPDATE CASCADE)");
-		   st.executeUpdate("CREATE TABLE IF NOT EXISTS Astronomy (id_astro INT AUTO_INCREMENT, date VARCHAR(20) NOT NULL, id_location INT NOT NULL,  sunrise VARCHAR(20), sunset VARCHAR(20), PRIMARY KEY(id_astro),   FOREIGN KEY (date) REFERENCES Actualday (date)ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (id_location) REFERENCES Location (id_location)ON DELETE CASCADE ON UPDATE CASCADE)");
-		   st.executeUpdate("CREATE TABLE IF NOT EXISTS Country (id_country INT AUTO_INCREMENT, date VARCHAR(20) NOT NULL, id_location INT NOT NULL, country_name VARCHAR(20), PRIMARY KEY(id_country),  FOREIGN KEY (date) REFERENCES Actualday (date)ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (id_location) REFERENCES Location (id_location)ON DELETE CASCADE ON UPDATE CASCADE)");
-		   st.executeUpdate("CREATE TABLE IF NOT EXISTS Region (id_region INT AUTO_INCREMENT NOT NULL, date VARCHAR(20) NOT NULL, id_location INT NOT NULL, region_name VARCHAR(20), PRIMARY KEY(id_region), FOREIGN KEY (date) REFERENCES Actualday (date)ON DELETE CASCADE ON UPDATE CASCADE, FOREIGN KEY (id_location) REFERENCES Location (id_location)ON DELETE CASCADE ON UPDATE CASCADE)");
-		   st.executeUpdate("CREATE TABLE IF NOT EXISTS Day (day VARCHAR(20) NOT NULL, PRIMARY KEY(day))");
-		   st.executeUpdate("CREATE TABLE IF NOT EXISTS Forecast (id_forecast INT AUTO_INCREMENT NOT NULL, PRIMARY KEY(id_forecast))");
+		{	
+			 Class.forName("com.mysql.jdbc.Driver");
+			 System.out.println("165");
+			 conn = (Connection) DriverManager.getConnection(_url, _user, _pwd);
+			 System.out.println("167");
+			if(conn != null){
+			  System.out.println("Connected to the database " + _url + " correctly.");
+			 }
+			//Crea un objeto SQLServerStatement para enviar instrucciones SQL a la base de datos
+			Statement st = (Statement) conn.createStatement();
+			BufferedReader br = new BufferedReader(new FileReader("dbScript"));
+			try {
+			    String line = br.readLine();
+			    while (line != null) {
+			    	System.out.println(line);
+			    	st.executeUpdate(line);
+			        line = br.readLine();
+			        
+			    }
+			} 
+			catch (FileNotFoundException ex){
+				System.out.println("The file does not exists");
+			}
+			finally {
+			    br.close();
+			}
 
-		   //Saving data in the database
-		   st.executeUpdate("INSERT INTO Location (city_name, longitude, latitude) VALUES ('"+location.getCity()+"','"+location.getLongitude()+"','"+location.getLatitude()+"' )");
 
-//		   st.executeUpdate("INSERT INTO Actualday (date) VALUES ('"+actual.getDate()+"')");
-//
-//		   st.executeUpdate("INSERT INTO Actualday_Location (date) VALUES ('"+actual.getDate()+"')");
-//		   st.executeUpdate("INSERT INTO Wind (date, chill, direction, speed) VALUES ('"+actual.getDate()+"','"+wind.getChill()+"','"+wind.getDirection()+"','"+wind.getSpeed()+"' )");
-//		   st.executeUpdate("INSERT INTO Atmosphere (city_name, longitude, latitude) VALUES ('"+location.getCity()+"','"+location.getLongitude()+"','"+location.getLatitude()+"' )");
-//		   st.executeUpdate("INSERT INTO Astronomy (city_name, longitude, latitude) VALUES ('"+location.getCity()+"','"+location.getLongitude()+"','"+location.getLatitude()+"' )");
-//		   st.executeUpdate("INSERT INTO Country (city_name, longitude, latitude) VALUES ('"+location.getCity()+"','"+location.getLongitude()+"','"+location.getLatitude()+"' )");
-//		   st.executeUpdate("INSERT INTO Region (city_name, longitude, latitude) VALUES ('"+location.getCity()+"','"+location.getLongitude()+"','"+location.getLatitude()+"' )");
 
 		   // Asking for some data about Location
-		   ResultSet rs = st.executeQuery("SELECT * FROM Location"); 
-		   while (rs.next()){
-		   System.out.println("id_location ="+rs.getObject("id_location")+
-		    		", city_name="+rs.getObject("city_name")+
-		   			", latitude="+rs.getObject("latitude")+
-		   			", longitude="+rs.getObject("longitude"));
-		   }
-		   rs.close();
+//		   ResultSet rs = st.executeQuery("SELECT * FROM Location"); 
+//		   while (rs.next()){
+//		   System.out.println("id_location ="+rs.getObject("id_location")+
+//		    		", city_name="+rs.getObject("city_name")+
+//		   			", latitude="+rs.getObject("latitude")+
+//		   			", longitude="+rs.getObject("longitude"));
+//		   }
+//		   rs.close();
 		   st.close();
 		   conn.close();
 
@@ -211,4 +211,62 @@ public class Manager {
 				System.out.println("***********Falloooooooooooooooooooooo******************");
 		}
 	}
+	
+	public void SetInfoBd(){
+//		use weather;
+//		INSERT INTO country (country_name)values("Argentina");
+//		INSERT INTO location(city_name,longitude,latitude,country_id)
+//		SELECT 'saslta','12','33',id_country 
+//		from country
+//		where country_name='Argentina';
+//
+//		INSERT INTO actualday(fulldate)values ('0/21');
+//
+//		INSERT INTO wind (`detaildate`, `chill`, `direction`, `speed`)
+//		SELECT MAX(id_actual),'sss','dsa','asd'
+//		from actualday;
+//		INSERT INTO atmosphere (`detaildate`, `humidity`, `pressure`, `rising`, `visibility`)
+//		SELECT MAX(id_actual),'sss','dsa','asd','ss'
+//		from actualday;
+//		INSERT INTO astronomy (`detaildate`, `date`, `sunrise`, `sunset`)
+//		SELECT MAX(id_actual),'sss','dsa','asd'
+//		from actualday;
+//
+//
+//		INSERT INTO days (`day_name`, `forecast_id`, `tempmax`, `tempmin`)
+//		SELECT 'ssss',MAX(id_actual),'dsa','asd'
+//		from actualday;
+//
+//		INSERT INTO actualday_location (`id_actual`, `id_location`)
+//		select max(id_location) ,max(id_location) 
+//		from location
+	}
+	
+	public void ReadBd(){
+	///// CONSULTAAAAAAAAAAAAAAAAAAAA
+//		use weather;
+//		SELECT * FROM wind
+//		INNER join atmosphere
+//		inner join astronomy
+//		inner join 
+//
+//		(select * from 
+//		location inner join actualday
+//		where id_actual=id_location
+//		-- and fulldate='0/21'
+//		and city_name='saslta'
+//		)A
+//		where id_actual=wind.detaildate
+//		and id_actual=atmosphere.detaildate
+//		and id_actual=astronomy.detaildate
+//		;
+//
+//		select day_name,tempmax,tempmin from days
+//		where forecast_id='1';
+	}
 }
+
+
+
+
+

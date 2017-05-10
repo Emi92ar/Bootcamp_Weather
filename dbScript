@@ -1,9 +1,9 @@
-CREATE DATABASE if not exists weatherr;
-use weatherr; 
+CREATE DATABASE if not exists weather;
+use weather; 
 CREATE TABLE IF NOT EXISTS Country (id_country INT auto_increment, country_name VARCHAR(20), PRIMARY KEY (id_country));
 CREATE TABLE IF NOT EXISTS Location (id_location INT AUTO_INCREMENT, country_id INT, city_name VARCHAR(20), longitude VARCHAR(20), latitude VARCHAR(20), PRIMARY KEY(id_location), FOREIGN KEY (country_id) REFERENCES Country (id_country) ON DELETE CASCADE ON UPDATE CASCADE);
 CREATE TABLE IF NOT EXISTS Actualday (id_actual INT auto_increment NOT NULL, fulldate VARCHAR(20), temperature VARCHAR(20), PRIMARY KEY(id_actual));
-CREATE TABLE IF NOT EXISTS Actualday_Location(id_actual INT, id_location INT, foreign key(id_actual) references Actualday (id_actual), foreign key(id_location) references Location (id_location));
+CREATE TABLE IF NOT EXISTS actualday_location(Id_actual INT, id_location INT, PRIMARY KEY (id_actual, id_location), foreign key(id_actual) references Actualday (id_actual), foreign key (id_location) references Location(id_location));
 CREATE TABLE IF NOT EXISTS Wind (detaildate INT, chill VARCHAR(20), direction VARCHAR(20), speed VARCHAR(20), PRIMARY KEY (detaildate), FOREIGN KEY (detaildate) REFERENCES actualday(id_actual) ON DELETE CASCADE ON UPDATE CASCADE);
 CREATE TABLE IF NOT EXISTS Atmosphere (detaildate INT, humidity VARCHAR(20), pressure VARCHAR(20), rising VARCHAR(20), visibility VARCHAR(20), PRIMARY KEY (detaildate),FOREIGN KEY (detaildate) REFERENCES actualday(id_actual) ON DELETE CASCADE ON UPDATE CASCADE);
 CREATE TABLE IF NOT EXISTS Astronomy (detaildate INT, sunrise VARCHAR(20), sunset VARCHAR(20), PRIMARY KEY (detaildate), FOREIGN KEY (detaildate) REFERENCES actualday(id_actual) ON DELETE CASCADE ON UPDATE CASCADE);

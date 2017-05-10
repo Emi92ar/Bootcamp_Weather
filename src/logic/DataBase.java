@@ -77,9 +77,18 @@ public class DataBase {
 			 }
 			Statement st = (Statement) conn.createStatement();
 			st.executeUpdate("use "+_dbname+";");
-			st.executeUpdate("INSERT INTO country (country_name)values('"+loc.getCountry()+"');");
-			st.executeUpdate("INSERT INTO location(city_name,longitude,latitude,country_id) "
-							+ "SELECT '"+loc.getCity()+"','"+loc.getLongitude()+"','"+loc.getLatitude()+"',id_country from country where country_name='"+loc.getCountry()+"';");
+			st.executeUpdate("INSERT INTO country (country_name) "
+							+ "SELECT * FROM (SELECT '"+loc.getCountry()+"') AS tmp "
+							+ "WHERE NOT EXISTS ("
+							+ "SELECT country_name from country "
+							+ "where country_name = '"+loc.getCountry()+"'"
+							+ ")limit 1;");		
+			st.executeUpdate("INSERT INTO location(city_name,longitude,latitude,country_id)"
+							+ "SELECT '"+loc.getCity()+"','"+loc.getLongitude()+"','"+loc.getLatitude()+"',id_country from country "
+							+ "where not exists (" 
+							+ "SELECT city_name from location "
+							+ "where city_name = '"+loc.getCity()+"')"
+							+ "AND country_name = '"+loc.getCountry()+"';");
 			System.out.println("SetInfoLocation Satisfactoriamente");
 			st.close();
 			conn.close();
@@ -232,7 +241,7 @@ public class DataBase {
 		}
 	}
 	
-	public void SetInfoActual_Location(){
+	public void SetInfoActual_Location(String city){
 		try{
 			Class.forName("com.mysql.jdbc.Driver");
 			conn = (Connection) DriverManager.getConnection(_url, _user, _pwd);
@@ -242,8 +251,9 @@ public class DataBase {
 			Statement st = (Statement) conn.createStatement();
 			st.executeUpdate("use "+_dbname+";");
 			st.executeUpdate("INSERT INTO actualday_location (`id_actual`, `id_location`)"
-								+"SELECT MAX(id_location),MAX(id_location)"
-								+"from location;");
+								+"SELECT MAX(id_actual), id_location from actualday"
+								+"inner join location"
+								+ "where city_name = '"+city+"';");
 			System.out.println("SetInfoActual_Location Satisfactoriamente");
 			st.close();
 			conn.close();
@@ -274,7 +284,7 @@ public class DataBase {
 			Statement st = (Statement) conn.createStatement();
 			st.executeUpdate("use "+_dbname+";");
 			ResultSet rs = st.executeQuery("SELECT day_name, tempmax, tempmin from days "
-											+ "where forecast_id='"+number+"'");
+					+ "where forecast_id='"+number+"'");
 			System.out.println("\n\n_____________________________Information privided by the DataBase_____________________________");
 			while(rs.next()){
 				System.out.println("Forecast day: " + rs.getObject("day_name")+"   ||Temp Max= "+rs.getObject("tempmax")+"   ||Temp Min= "+rs.getObject("tempmax"));
@@ -292,5 +302,40 @@ public class DataBase {
 		catch (Exception e){
 			System.out.println("***********Falloooooooooooooooooooooo*****************");
 		}
+	}
+		/**
+		 *  This method give a list of the places Consulted
+		 */
+				
+		public void ReadBdPlacesConsulted(){
+			try{
+				System.out.println("Reading the database-------------------------------------------");
+				Class.forName("com.mysql.jdbc.Driver");
+				conn = (Connection) DriverManager.getConnection(_url, _user, _pwd);
+				if(conn != null){
+				  System.out.println("Connected to the database " + _url+_dbname + " correctly.");
+				 }
+				Statement st = (Statement) conn.createStatement();
+				st.executeUpdate("use "+_dbname+";");
+				ResultSet rs = st.executeQuery("SELECT * from location "
+											+ "inner join country on country_id = id_country;");
+				System.out.println("\n\n_____________________________Information privided by the DataBase_____________________________");
+				while(rs.next()){
+					System.out.println("Id_location= " + rs.getObject("Id_location")+"   ||country_id= "+rs.getObject("country_id")+"   ||city_name= "+rs.getObject("city_name")+""
+							+ "   ||longitude= "+rs.getObject("longitude")+"   ||latitude= "+rs.getObject("latitude")+"   ||id_country= "+rs.getObject("id_country")+"   "
+							+ "||country_name= "+rs.getObject("country_name"));
+				}
+				System.out.println("\n______________________________________________________________________________________________");
+				rs.close();
+			}
+			catch (SQLException ex){
+				System.out.println("There was a problem with the database when attempting to connect " + _url+_dbname);
+			}
+			catch (ClassNotFoundException ex){
+				System.out.println(ex);
+			}
+			catch (Exception e){
+				System.out.println("***********Falloooooooooooooooooooooo*****************");
+			}
 	}					
 }

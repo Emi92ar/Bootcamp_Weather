@@ -104,7 +104,7 @@ public class Manager {
 		chill = "20";
 		direction = "3";
 		speed = "90";
-		country = "Argentina";
+		country = "Chile";
 		region = "Center";
 		latitude = "-20";
 		longitude = "50";
@@ -152,8 +152,9 @@ public class Manager {
 		for(int i = 0; i<5; i++){
 			db.SetInfoDay(forecast.getDay(i));
 		}
-		db.SetInfoActual_Location();
+		db.SetInfoActual_Location(location.getCity());
 		db.ReadBdForecast(2);
+		db.ReadBdPlacesConsulted();
 	}
 	
 	public void PrintInformation(){

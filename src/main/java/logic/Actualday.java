@@ -117,23 +117,23 @@ public class Actualday {
 	}
 	
 	public static class Atmosphere{
-		private String humedity;
+		private String Humidity;
 		private String pressure;
 		private String rising;
 		private String visibility;
 		
-		public Atmosphere(String humedity, String pressure, String rising, String visibility){
-			this.humedity = humedity;
+		public Atmosphere(String Humidity, String pressure, String rising, String visibility){
+			this.Humidity = Humidity;
 			this.pressure = pressure;
 			this.rising = rising;
 			this.visibility = visibility;
 		}
 		
-		public String getHumedity() {
-			return humedity;
+		public String getHumidity() {
+			return Humidity;
 		}
-		public void setHumedity(String humedity) {
-			this.humedity = humedity;
+		public void setHumidity(String Humidity) {
+			this.Humidity = Humidity;
 		}
 		public String getPressure() {
 			return pressure;
@@ -155,7 +155,7 @@ public class Actualday {
 		}
 		
 		public String toString(){
-			return "\nInformation about the object Atmosphere\n Humidity "+ getHumedity() + "\n Pressure "+ getPressure()+"\n Rising "+ getRising()+ "\n Visibility "+ getVisibility();
+			return "\nInformation about the object Atmosphere\n Humidity "+ getHumidity() + "\n Pressure "+ getPressure()+"\n Rising "+ getRising()+ "\n Visibility "+ getVisibility();
 		}
 	}
 	

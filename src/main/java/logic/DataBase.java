@@ -170,7 +170,7 @@ public class DataBase {
 			Statement st = (Statement) conn.createStatement();
 			st.executeUpdate("use "+_dbname+";");
 			st.executeUpdate("INSERT INTO atmosphere (`detaildate`, `humidity`, `pressure`, `rising`, `visibility`)"
-							+ "SELECT MAX(id_actual),'"+at.getHumedity()+"','"+at.getPressure()+"','"+at.getRising()+"','"+at.getVisibility()+"'"
+							+ "SELECT MAX(id_actual),'"+at.getHumidity()+"','"+at.getPressure()+"','"+at.getRising()+"','"+at.getVisibility()+"'"
 							+ "from actualday;");
 			System.out.println("SetInfoAtmosphere Satisfactoriamente");
 			st.close();

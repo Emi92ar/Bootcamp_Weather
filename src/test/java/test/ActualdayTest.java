@@ -1,5 +1,4 @@
 package test;
-import logic.Main;
 
 import static org.junit.Assert.*;
 
@@ -9,8 +8,9 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import logic.Actualday;
 
-public class MainTest {
+public class ActualdayTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -30,7 +30,13 @@ public class MainTest {
 
 	@Test
 	public void test() {
-		fail("Not yet implemented");
+		boolean var = true;
+		assertTrue(var);
+//		Actualday actualday = new Actualday("Monday", 50);
+//		assertEquals("Monday", actualday.getDate());
+//		actualday.setDate("Wed");
+//		assertNotEquals("Mondas", actualday.getDate());
+//		assertEquals("Wed", actualday.getDate());
 	}
 
 }

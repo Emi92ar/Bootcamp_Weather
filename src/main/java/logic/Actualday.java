@@ -1,20 +1,21 @@
 package logic;
 
+
 public class Actualday {
 
 	private String date;
-	private float temperature;
+	private String temperature;
 
 	// Class constructor 
-	public Actualday(String date, float temperature){
+	public Actualday(String date, String temperature){
 		this.date = date;
 		this.temperature = temperature;
 	}
 	
-	public float getTemperature() {
+	public String getTemperature() {
 		return temperature;
 	}
-	public void setTemperature(float temperature) {
+	public void setTemperature(String temperature) {
 		this.temperature = temperature;
 	}
 	public String getDate() {
@@ -25,7 +26,7 @@ public class Actualday {
 	}
 	
 	public String toString(){
-		return "Information about Actual Day\n Date :" + getDate() + "\n Temperature " + getTemperature();
+		return "Information about the object Actual Day\n Date :" + getDate() + "\n Temperature " + getTemperature();
 	}
 	
 	
@@ -34,8 +35,8 @@ public class Actualday {
 		private String city;
 		private String country;
 		private String region;
-		private float latitude;
-		private float longitude;
+		private String latitude;
+		private String longitude;
 		
 		public Location(String city){
 			this.city = city;
@@ -60,33 +61,33 @@ public class Actualday {
 			this.region = region;
 		}
 
-		public float getLatitude() {
+		public String getLatitude() {
 			return latitude;
 		}
 
-		public void setLatitude(float latitude) {
+		public void setLatitude(String latitude) {
 			this.latitude = latitude;
 		}
 
-		public float getLongitude() {
+		public String getLongitude() {
 			return longitude;
 		}
 
-		public void setLongitude(float longitude) {
+		public void setLongitude(String longitude) {
 			this.longitude = longitude;
 		}
 		
 		public String toString(){
-			return "\nInformation about Location\n City "+ getCity() + "\n Country() " + getCountry() + "\n Region() "+ getRegion() + "\n Latitude() " + getLatitude() + "\n Longitude " + getLongitude();
+			return "\nInformation about the object Location\n City "+ getCity() + "\n Country() " + getCountry() + "\n Region() "+ getRegion() + "\n Latitude() " + getLatitude() + "\n Longitude " + getLongitude();
 		}
 	}
 	
 	public static class Wind{
 		private String chill;
-		private float direction;
-		private float speed;
+		private String direction;
+		private String speed;
 		
-		public Wind(String chill, float direction, float speed){
+		public Wind(String chill, String direction, String speed){
 			this.chill = chill;
 			this.direction = direction;
 			this.speed = speed;
@@ -98,63 +99,63 @@ public class Actualday {
 		public void setChill(String chill) {
 			this.chill = chill;
 		}
-		public float getDirection() {
+		public String getDirection() {
 			return direction;
 		}
-		public void setDirection(float direction) {
+		public void setDirection(String direction) {
 			this.direction = direction;
 		}
-		public float getSpeed() {
+		public String getSpeed() {
 			return speed;
 		}
-		public void setSpeed(float speed) {
+		public void setSpeed(String speed) {
 			this.speed = speed;
 		}
 		public String toString(){
-			return "\nInformation About Wind\n Chill "+ getChill() + "\n Direction " + getDirection() + "\n Speed " + getSpeed();
+			return "\nInformation about the object Wind\n Chill "+ getChill() + "\n Direction " + getDirection() + "\n Speed " + getSpeed();
 		}
 	}
 	
 	public static class Atmosphere{
-		private float humedity;
-		private float pressure;
-		private float rising;
-		private float visibility;
+		private String humedity;
+		private String pressure;
+		private String rising;
+		private String visibility;
 		
-		public Atmosphere(float humedity, float pressure, float rising, float visibility){
+		public Atmosphere(String humedity, String pressure, String rising, String visibility){
 			this.humedity = humedity;
 			this.pressure = pressure;
 			this.rising = rising;
 			this.visibility = visibility;
 		}
 		
-		public float getHumedity() {
+		public String getHumedity() {
 			return humedity;
 		}
-		public void setHumedity(float humedity) {
+		public void setHumedity(String humedity) {
 			this.humedity = humedity;
 		}
-		public float getPressure() {
+		public String getPressure() {
 			return pressure;
 		}
-		public void setPressure(float pressure) {
+		public void setPressure(String pressure) {
 			this.pressure = pressure;
 		}
-		public float getRising() {
+		public String getRising() {
 			return rising;
 		}
-		public void setRising(float rising) {
+		public void setRising(String rising) {
 			this.rising = rising;
 		}
-		public float getVisibility() {
+		public String getVisibility() {
 			return visibility;
 		}
-		public void setVisibility(float visibility) {
+		public void setVisibility(String visibility) {
 			this.visibility = visibility;
 		}
 		
 		public String toString(){
-			return "\nInformation about Atmosphere\n Humidity "+ getHumedity() + "\n Pressure "+ getPressure()+"\n Rising "+ getRising()+ "\n Visibility "+ getVisibility();
+			return "\nInformation about the object Atmosphere\n Humidity "+ getHumedity() + "\n Pressure "+ getPressure()+"\n Rising "+ getRising()+ "\n Visibility "+ getVisibility();
 		}
 	}
 	
@@ -181,7 +182,7 @@ public class Actualday {
 		}
 		
 		public String toString(){
-			return "\nInformation about Astronomy\n Sunrise " + getSunrise() + "\n Sunset " + getSunset();
+			return "\nInformation about the object Astronomy\n Sunrise " + getSunrise() + "\n Sunset " + getSunset();
 		}
 	}
 	

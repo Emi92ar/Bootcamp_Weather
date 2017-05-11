@@ -38,19 +38,20 @@ public class Manager {
 	//The following field is an example how this class store the information provided by the parsed
 	private String sunrise;
 	private String sunset;
-	private float humidity;
-	private float pressure;
-	private float rising;
-	private float visibility;
+	private String humidity;
+	private String pressure;
+	private String rising;
+	private String visibility;
 	private String chill;
-	private float direction;
-	private float speed;
+	private String direction;
+	private String speed;
 	private String country;
 	private String region;
-	private float latitude;
-	private float longitude;
+	private String latitude;
+	private String longitude;
 	private String date;
-	private float temperature;
+	private String temperature;
+	private DataBase db;
 	
 	//I Use this Array to fill the information, 
 	//When I have the information of the URL, I will not need these array
@@ -77,7 +78,6 @@ public class Manager {
 		AskForYahooForecast("yahoo");
 		ParserInfo();
 		CreateNodesWithInfo();
-		DataBase();
 	}
 	
 	// Will return the information from the URL. It is not a void method
@@ -97,26 +97,26 @@ public class Manager {
 	public void ParserInfo(){		
 		sunrise ="19:00hs";
 		sunset = "7:00hs";
-		humidity = 72;
-		pressure = 80;
-		rising = 30;
-		visibility = 12;
+		humidity = "72";
+		pressure = "80";
+		rising = "30";
+		visibility = "12";
 		chill = "20";
-		direction = 3;
-		speed = 90;
-		country = "Argentina";
+		direction = "3";
+		speed = "90";
+		country = "Chile";
 		region = "Center";
-		latitude = -20;
-		longitude = 50;
-		date = "Wed 26 Apr 2017";
-		temperature = 36;
+		latitude = "-20";
+		longitude = "50";
+		date = "Wed";
+		temperature = "36";
 		days.add(0, "Wed"); 
 		days.add(1, "Thu");
 		days.add(2, "Fri"); 
 		days.add(3, "Sat");
 		days.add(4, "Sun");
 		for(int i = 0 ; i < 5; i ++){
-			tempMax.add(i, Float.valueOf(35 + i));
+			tempMax.add(i, Float.valueOf(40 + i));
 			tempMin.add(i, Float.valueOf(10 + i));
 		}
 	}
@@ -143,130 +143,29 @@ public class Manager {
 		wind = new Actualday.Wind(chill, direction, speed);		
 		atmosphere = new Actualday.Atmosphere(humidity, pressure, rising, visibility);
 		astronomy = new Actualday.Astronomy(sunrise, sunset);
+		db = db.getInstance();
+		db.SetInfoLocation(location);
+		db.SetInfoActualday(actual);
+		db.SetInfoWind(wind);
+		db.SetInfoAtmosphere(atmosphere);
+		db.SetInfoAstronomy(astronomy);
+		for(int i = 0; i<5; i++){
+			db.SetInfoDay(forecast.getDay(i));
+		}
+		db.SetInfoActual_Location(location.getCity());
+		db.ReadBdForecast(2);
+		db.ReadBdPlacesConsulted();
 	}
 	
 	public void PrintInformation(){
-//		System.out.println(actual); 
-//		System.out.println(location);
-//		System.out.println(wind);
-//		System.out.println(atmosphere);
-//		System.out.println(astronomy);
-//		System.out.println("\nInformation about Forecast");
-//		for(int i = 0 ; i < 5 ; i++){
-//			System.out.println(forecast.getDay(i));
-//		}
-//		System.out.println(json);
-	}
-	
-	public void DataBase()  {
-		try
-		{	
-			 Class.forName("com.mysql.jdbc.Driver");
-			 System.out.println("165");
-			 conn = (Connection) DriverManager.getConnection(_url, _user, _pwd);
-			 System.out.println("167");
-			if(conn != null){
-			  System.out.println("Connected to the database " + _url + " correctly.");
-			 }
-			//Crea un objeto SQLServerStatement para enviar instrucciones SQL a la base de datos
-			Statement st = (Statement) conn.createStatement();
-			BufferedReader br = new BufferedReader(new FileReader("dbScript"));
-			try {
-			    String line = br.readLine();
-			    while (line != null) {
-			    	System.out.println(line);
-			    	st.executeUpdate(line);
-			        line = br.readLine();
-			        
-			    }
-			} 
-			catch (FileNotFoundException ex){
-				System.out.println("The file does not exists");
-			}
-			finally {
-			    br.close();
-			}
-
-
-
-		   // Asking for some data about Location
-//		   ResultSet rs = st.executeQuery("SELECT * FROM Location"); 
-//		   while (rs.next()){
-//		   System.out.println("id_location ="+rs.getObject("id_location")+
-//		    		", city_name="+rs.getObject("city_name")+
-//		   			", latitude="+rs.getObject("latitude")+
-//		   			", longitude="+rs.getObject("longitude"));
-//		   }
-//		   rs.close();
-		   st.close();
-		   conn.close();
-
-		}catch (SQLException ex){
-				System.out.println("There was a problem with the database when attempting to connect " + _url);
+		System.out.println(actual); 
+		System.out.println(location);
+		System.out.println(wind);
+		System.out.println(atmosphere);
+		System.out.println(astronomy);
+		System.out.println("\nInformation about the ArrayList Forecast");
+		for(int i = 0 ; i < forecast.AmountDay() ; i++){
+			System.out.println(forecast.getDay(i));
 		}
-		catch (ClassNotFoundException ex){
-			System.out.println(ex);
-		}
-		catch (Exception e){
-				System.out.println("***********Falloooooooooooooooooooooo******************");
-		}
-	}
-	
-	public void SetInfoBd(){
-//		use weather;
-//		INSERT INTO country (country_name)values("Argentina");
-//		INSERT INTO location(city_name,longitude,latitude,country_id)
-//		SELECT 'saslta','12','33',id_country 
-//		from country
-//		where country_name='Argentina';
-//
-//		INSERT INTO actualday(fulldate)values ('0/21');
-//
-//		INSERT INTO wind (`detaildate`, `chill`, `direction`, `speed`)
-//		SELECT MAX(id_actual),'sss','dsa','asd'
-//		from actualday;
-//		INSERT INTO atmosphere (`detaildate`, `humidity`, `pressure`, `rising`, `visibility`)
-//		SELECT MAX(id_actual),'sss','dsa','asd','ss'
-//		from actualday;
-//		INSERT INTO astronomy (`detaildate`, `date`, `sunrise`, `sunset`)
-//		SELECT MAX(id_actual),'sss','dsa','asd'
-//		from actualday;
-//
-//
-//		INSERT INTO days (`day_name`, `forecast_id`, `tempmax`, `tempmin`)
-//		SELECT 'ssss',MAX(id_actual),'dsa','asd'
-//		from actualday;
-//
-//		INSERT INTO actualday_location (`id_actual`, `id_location`)
-//		select max(id_location) ,max(id_location) 
-//		from location
-	}
-	
-	public void ReadBd(){
-	///// CONSULTAAAAAAAAAAAAAAAAAAAA
-//		use weather;
-//		SELECT * FROM wind
-//		INNER join atmosphere
-//		inner join astronomy
-//		inner join 
-//
-//		(select * from 
-//		location inner join actualday
-//		where id_actual=id_location
-//		-- and fulldate='0/21'
-//		and city_name='saslta'
-//		)A
-//		where id_actual=wind.detaildate
-//		and id_actual=atmosphere.detaildate
-//		and id_actual=astronomy.detaildate
-//		;
-//
-//		select day_name,tempmax,tempmin from days
-//		where forecast_id='1';
 	}
 }
-
-
-
-
-

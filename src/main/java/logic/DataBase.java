@@ -24,38 +24,43 @@ public class DataBase {
 	private DataBase(){
 		try
 		{	
-			Class.forName("com.mysql.jdbc.Driver");
-			conn = (Connection) DriverManager.getConnection(_url, _user, _pwd);
-			if(conn != null){
-			  System.out.println("Connected to the database " + _url + " correctly.");
-			 }
-			Statement st = (Statement) conn.createStatement();
+			// In the next line read my script to create the db and their tables
 			BufferedReader br = new BufferedReader(new FileReader("src/main/resources/dbScript"));
-			try {
-			    String line = br.readLine();
-			    String[] temp = line.split("\\s+");
-			    _dbname = temp[5];
+			//With the following lines I find the db'name provided by the script 
+		    String line = br.readLine();
+		    String[] temp = line.split("\\s+");
+		    _dbname = temp[5];
+		    try {
+				Class.forName("com.mysql.jdbc.Driver");
+				conn = (Connection) DriverManager.getConnection(_url, _user, _pwd);
+				if(conn != null){
+				  System.out.println("Connected to the database " + _url+_dbname + " correctly.");
+				 }
+				Statement st = (Statement) conn.createStatement();
+				//I execute all the script's lines
 			    while (line != null) {
 			    	System.out.println(line);
 			    	st.executeUpdate(line);
 			    	line = br.readLine();
 			    }
+			    st.close();
 			} 
-			catch (FileNotFoundException ex){
-				System.out.println("The file does not exists");
-				}
-			finally {
-			    br.close();
-			}
-		   st.close();
-		   conn.close();
-	
-		}catch (SQLException ex){
+			catch (SQLException ex){
 				System.out.println("There was a problem with the database when attempting to connect " + _url);
+			}
+			catch (ClassNotFoundException ex){
+				System.out.println(ex);
+			}
+			
+			finally {
+				conn.close();
+			}
+		   br.close();
 		}
-		catch (ClassNotFoundException ex){
-			System.out.println(ex);
-		}
+		catch (FileNotFoundException ex){
+			System.out.println("The file does not exists");
+			}
+		
 		catch (Exception e){
 			System.out.println("***********Falloooooooooooooooooooooo******************");
 		}
@@ -130,8 +135,6 @@ public class DataBase {
 		}
 	}
 
-
-	
 	
 	public void SetInfoWind(Actualday.Wind wind){
 		try{

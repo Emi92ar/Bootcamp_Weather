@@ -1,4 +1,5 @@
 package logic;
+import java.util.Scanner;
 /**
  * Main class
  *@author Emiliano Bentivegna
@@ -6,8 +7,14 @@ package logic;
 public class Main 
 {
     public static void main( String[] args )
-    {
-        Actualday.Location location = new Actualday.Location("Santiago");
+    {	
+    	System.out.println ("Starting");
+        System.out.println ("Insert the city's name to know the weather condition");
+        String keyboardInput = "";
+        Scanner scannerInput = new Scanner (System.in); 
+        keyboardInput = scannerInput.nextLine();
+        System.out.println ("You ask for: " + keyboardInput +".");
+        Actualday.Location location = new Actualday.Location(keyboardInput);
         Manager manager = new Manager(location);
         manager.PrintInformation();
     }

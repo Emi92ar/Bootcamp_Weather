@@ -42,10 +42,19 @@ public class DataBaseTest {
 	
 	@Test
 	public void Conecction() throws Exception {
+		/*
+		 * 	private String _user = "root"; 
+		 *	private String _pwd = "root";
+		 *	private String _dbname;
+		 *	static String _url = "jdbc:mysql://localhost:3306/";
+		 * 
+		 */
+	
 		DeleteDbFiles.execute("~", "test", true);
 	    Class.forName("org.h2.Driver");
-	    try (Connection conn = DriverManager.getConnection("jdbc:h2:~/test"); 
-	        
+	    
+	    try (Connection conn = DriverManager.getConnection("jdbc:h2:~/test");
+
 	    	Statement stat = conn.createStatement()) {
 	        stat.execute("create table test(id int primary key, name varchar(255))");
 	        stat.execute("insert into test values(1, 'Hello')");

@@ -143,7 +143,7 @@ public class Manager {
 		wind = new Actualday.Wind(chill, direction, speed);		
 		atmosphere = new Actualday.Atmosphere(humidity, pressure, rising, visibility);
 		astronomy = new Actualday.Astronomy(sunrise, sunset);
-		db = db.getInstance();
+		db = DataBase.getInstance("com.mysql.jdbc.Driver","jdbc:mysql://localhost:3306", "root", "root");
 		db.SetInfoLocation(location);
 		db.SetInfoActualday(actual);
 		db.SetInfoWind(wind);

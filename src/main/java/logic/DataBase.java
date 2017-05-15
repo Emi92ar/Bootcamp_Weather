@@ -7,21 +7,30 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.Statement;
+import java.sql.Statement;
+import java.sql.Connection;
+
+//import com.mysql.jdbc.Connection;
+//import com.mysql.jdbc.Statement;
+
+import org.h2.tools.DeleteDbFiles;
 
 public class DataBase {
 	
 
-	private String _user = "root"; 
-	private String _pwd = "root";
+//	private String _user = "root"; 
+//	private String _pwd = "root";
 	private String _dbname;
-	static String _url = "jdbc:mysql://localhost:3306/";
+//	static String _url = "jdbc:mysql://localhost:3306/";
 	private Connection conn = null;
+	private String _user;
+	private String _pwd;
+	private String _url;
+	private String _driver;
 	
 	private static DataBase instance = null;
 
-	private DataBase(){
+	private DataBase(String _driver, String _url, String _user, String _pwd){
 		try
 		{	
 			// In the next line read my script to create the db and their tables
@@ -31,19 +40,30 @@ public class DataBase {
 		    String[] temp = line.split("\\s+");
 		    _dbname = temp[5];
 		    try {
-				Class.forName("com.mysql.jdbc.Driver");
+				Class.forName(_driver);
 				conn = (Connection) DriverManager.getConnection(_url, _user, _pwd);
 				if(conn != null){
 				  System.out.println("Connected to the database " + _url+_dbname + " correctly.");
 				 }
 				Statement st = (Statement) conn.createStatement();
+				if(_driver == "org.h2.Driver"){
+//					System.out.println("This line it not execute because it's h2 and I don't need to execute the first line to create database" +line);
+					line = br.readLine();
+//					System.out.println("This line it now excute because it's h2" +line);
+					line = br.readLine();
+				}
 				//I execute all the script's lines
 			    while (line != null) {
-			    	System.out.println(line);
+//			    	System.out.println(line);
 			    	st.executeUpdate(line);
 			    	line = br.readLine();
 			    }
 			    st.close();
+			    conn.close();
+			    this._url = _url;
+			    this._user = _user;
+			    this._pwd = _pwd;
+			    this._driver = _driver;
 			} 
 			catch (SQLException ex){
 				System.out.println("There was a problem with the database when attempting to connect " + _url);
@@ -66,22 +86,25 @@ public class DataBase {
 		}
 	}
 	
-	public static DataBase getInstance(){
+	public static DataBase getInstance(String driver, String url, String user, String pwd){
 		if(instance == null){
-			instance = new DataBase();
+			instance = new DataBase(driver, url, user, pwd);
 		}
 		return instance;
 	}
 	
+	
 	public void SetInfoLocation(Actualday.Location loc){
 		try{
-			Class.forName("com.mysql.jdbc.Driver");	
+			Class.forName(_driver);	
 			conn = (Connection) DriverManager.getConnection(_url, _user, _pwd);
 			if(conn != null){
 			  System.out.println("Connected to the database " + _url+_dbname + " correctly.");
 			 }
 			Statement st = (Statement) conn.createStatement();
-			st.executeUpdate("use "+_dbname+";");
+			if(_driver != "org.h2.Driver"){
+				st.executeUpdate("use "+_dbname+";");
+			}
 			st.executeUpdate("INSERT INTO country (country_name) "
 							+ "SELECT * FROM (SELECT '"+loc.getCountry()+"') AS tmp "
 							+ "WHERE NOT EXISTS ("
@@ -112,13 +135,15 @@ public class DataBase {
 	
 	public void SetInfoActualday(Actualday actual){
 		try{
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName(_driver);
 			conn = (Connection) DriverManager.getConnection(_url, _user, _pwd);
 			if(conn != null){
 			  System.out.println("Connected to the database " + _url+_dbname + " correctly.");
 			 }
 			Statement st = (Statement) conn.createStatement();
-			st.executeUpdate("use "+_dbname+";");
+			if(_driver != "org.h2.Driver"){
+				st.executeUpdate("use "+_dbname+";");
+			}
 			st.executeUpdate("INSERT INTO actualday(fulldate, temperature)values ('"+actual.getDate()+"','"+actual.getTemperature()+"');");
 			System.out.println("SetInfoActualDay Satisfactoriamente");
 			st.close();
@@ -138,13 +163,15 @@ public class DataBase {
 	
 	public void SetInfoWind(Actualday.Wind wind){
 		try{
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName(_driver);
 			conn = (Connection) DriverManager.getConnection(_url, _user, _pwd);
 			if(conn != null){
 			  System.out.println("Connected to the database " + _url+_dbname + " correctly.");
 			 }
 			Statement st = (Statement) conn.createStatement();
-			st.executeUpdate("use "+_dbname+";");
+			if(_driver != "org.h2.Driver"){
+				st.executeUpdate("use "+_dbname+";");
+			}
 			st.executeUpdate("INSERT INTO wind (`detaildate`, `chill`, `direction`, `speed`)"
 								+ "SELECT MAX(id_actual),'"+wind.getChill()+"','"+wind.getDirection()+"','"+wind.getSpeed()+"'"
 								+ "from actualday;");
@@ -165,13 +192,15 @@ public class DataBase {
 
 	public void SetInfoAtmosphere(Actualday.Atmosphere at){
 		try{
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName(_driver);
 			conn = (Connection) DriverManager.getConnection(_url, _user, _pwd);
 			if(conn != null){
 			  System.out.println("Connected to the database " + _url+_dbname + " correctly.");
 			 }
 			Statement st = (Statement) conn.createStatement();
-			st.executeUpdate("use "+_dbname+";");
+			if(_driver != "org.h2.Driver"){
+				st.executeUpdate("use "+_dbname+";");
+			}
 			st.executeUpdate("INSERT INTO atmosphere (`detaildate`, `humidity`, `pressure`, `rising`, `visibility`)"
 							+ "SELECT MAX(id_actual),'"+at.getHumidity()+"','"+at.getPressure()+"','"+at.getRising()+"','"+at.getVisibility()+"'"
 							+ "from actualday;");
@@ -192,13 +221,15 @@ public class DataBase {
 	
 	public void SetInfoAstronomy(Actualday.Astronomy as){
 		try{
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName(_driver);
 			conn = (Connection) DriverManager.getConnection(_url, _user, _pwd);
 			if(conn != null){
 			  System.out.println("Connected to the database " + _url+_dbname + " correctly.");
 			 }
 			Statement st = (Statement) conn.createStatement();
-			st.executeUpdate("use "+_dbname+";");
+			if(_driver != "org.h2.Driver"){
+				st.executeUpdate("use "+_dbname+";");
+			}
 			st.executeUpdate("INSERT INTO astronomy(`detaildate`, `sunrise`, `sunset`) "
 							+ "SELECT MAX(id_actual),'"+ as.getSunrise()+"','"+as.getSunset()+"' "
 							+ "from actualday;");
@@ -219,13 +250,15 @@ public class DataBase {
 	
 	public void SetInfoDay(Day day){
 		try{
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName(_driver);
 			conn = (Connection) DriverManager.getConnection(_url, _user, _pwd);
 			if(conn != null){
 			  System.out.println("Connected to the database " + _url+_dbname + " correctly.");
 			 }
 			Statement st = (Statement) conn.createStatement();
-			st.executeUpdate("use "+_dbname+";");
+			if(_driver != "org.h2.Driver"){
+				st.executeUpdate("use "+_dbname+";");
+			}
 			st.executeUpdate("INSERT INTO days(`day_name`, `forecast_id`, `tempmax`, `tempmin`) "
 							+ "SELECT '"+day.getDay()+"', MAX(id_actual),'"+ day.getTempMax()+"','"+day.getTempMin()+"' "
 							+ "from actualday;");
@@ -246,13 +279,15 @@ public class DataBase {
 	
 	public void SetInfoActual_Location(String city){
 		try{
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName(_driver);
 			conn = (Connection) DriverManager.getConnection(_url, _user, _pwd);
 			if(conn != null){
 			  System.out.println("Connected to the database " + _url+_dbname + " correctly.");
 			 }
 			Statement st = (Statement) conn.createStatement();
-			st.executeUpdate("use "+_dbname+";");
+			if(_driver != "org.h2.Driver"){
+				st.executeUpdate("use "+_dbname+";");
+			}
 			st.executeUpdate("INSERT INTO actualday_location (`id_actual`, `id_location`)"
 								+"SELECT MAX(id_actual), id_location from actualday"
 								+"inner join location"
@@ -279,13 +314,15 @@ public class DataBase {
 	public void ReadBdForecast(int number){
 		try{
 			System.out.println("Reading the database-------------------------------------------");
-			Class.forName("com.mysql.jdbc.Driver");
+			Class.forName(_driver);
 			conn = (Connection) DriverManager.getConnection(_url, _user, _pwd);
 			if(conn != null){
 			  System.out.println("Connected to the database " + _url+_dbname + " correctly.");
 			 }
 			Statement st = (Statement) conn.createStatement();
-			st.executeUpdate("use "+_dbname+";");
+			if(_driver != "org.h2.Driver"){
+				st.executeUpdate("use "+_dbname+";");
+			}
 			ResultSet rs = st.executeQuery("SELECT day_name, tempmax, tempmin from days "
 					+ "where forecast_id='"+number+"'");
 			System.out.println("\n\n_____________________________Information privided by the DataBase_____________________________");
@@ -313,13 +350,15 @@ public class DataBase {
 		public void ReadBdPlacesConsulted(){
 			try{
 				System.out.println("Reading the database-------------------------------------------");
-				Class.forName("com.mysql.jdbc.Driver");
+				Class.forName(_driver);
 				conn = (Connection) DriverManager.getConnection(_url, _user, _pwd);
 				if(conn != null){
 				  System.out.println("Connected to the database " + _url+_dbname + " correctly.");
 				 }
 				Statement st = (Statement) conn.createStatement();
-				st.executeUpdate("use "+_dbname+";");
+				if(_driver != "org.h2.Driver"){
+					st.executeUpdate("use "+_dbname+";");
+				}
 				ResultSet rs = st.executeQuery("SELECT * from location "
 											+ "inner join country on country_id = id_country;");
 				System.out.println("\n\n_____________________________Information privided by the DataBase_____________________________");
@@ -340,5 +379,11 @@ public class DataBase {
 			catch (Exception e){
 				System.out.println("***********Falloooooooooooooooooooooo*****************");
 			}
-	}					
+	}		
+		/*
+		 * This method is only used to do other test and reset instance
+		 */
+		public void ResetClass(){
+			instance = null;
+		}
 }

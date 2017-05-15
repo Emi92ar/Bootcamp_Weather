@@ -8,15 +8,24 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import logic.Actualday;
 import logic.DataBase;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import org.h2.tools.DeleteDbFiles;
 
 public class DataBaseTest {
-
+	private String _driver = "org.h2.Driver";
+	private String _url = "jdbc:h2:~/weatherr";
+	private String _user = "root";
+	private String _pwd = "root";
+	private String _dbName= "weatherr";
+	private Connection conn = null;
+	private DataBase db;
+	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
@@ -27,45 +36,58 @@ public class DataBaseTest {
 
 	@Before
 	public void setUp() throws Exception {
+		DeleteDbFiles.execute("~", _dbName, true);
+		db = DataBase.getInstance(_driver,_url, _user, _pwd);
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		db.ResetClass();
 	}
 
 	@Test
-	public void OnlyOneInstance() {
-		DataBase db = DataBase.getInstance();
-		DataBase db1 = DataBase.getInstance();
+	public void CreateAndConnectToDataBase() {
+		DataBase db1 = DataBase.getInstance(_driver,_url, _user, _pwd);
 		assertEquals(db,db1);
 	}
 	
 	@Test
-	public void Conecction() throws Exception {
-		/*
-		 * 	private String _user = "root"; 
-		 *	private String _pwd = "root";
-		 *	private String _dbname;
-		 *	static String _url = "jdbc:mysql://localhost:3306/";
-		 * 
-		 */
-	
-		DeleteDbFiles.execute("~", "test", true);
-	    Class.forName("org.h2.Driver");
-	    
-	    try (Connection conn = DriverManager.getConnection("jdbc:h2:~/test");
-
-	    	Statement stat = conn.createStatement()) {
-	        stat.execute("create table test(id int primary key, name varchar(255))");
-	        stat.execute("insert into test values(1, 'Hello')");
-	        try (ResultSet rs = stat.executeQuery("select * from test")) {
-	            while (rs.next()) {
-	                assertEquals("Error writing or reading db", "Hello",rs.getString("name"));
-	            }
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
+	public void WritingAndReadingBd_Location() {
+		Actualday.Location loc = new Actualday.Location("Zapala");
+		loc.setCountry("Argentina");
+		loc.setLatitude("-66");
+		loc.setLongitude("66");
+		loc.setRegion("Patagonia");
+		db.SetInfoLocation(loc);
+		try{
+			Class.forName(_driver);
+			conn = (Connection) DriverManager.getConnection(_url, _user, _pwd);
+			Statement st = (Statement) conn.createStatement();
+			
+			ResultSet rs = st.executeQuery("SELECT * from location "
+										+ "inner join country on country_id = id_country;");
+			while(rs.next()){
+				assertEquals("1", rs.getObject("Id_location").toString());
+				assertEquals("1",  rs.getObject("country_id").toString());
+				assertEquals("Zapala", rs.getObject("city_name").toString());
+				assertEquals("66", rs.getObject("longitude").toString());
+				assertEquals("-66", rs.getObject("latitude").toString());
+				assertEquals("1", rs.getObject("id_country").toString());
+				assertEquals("Argentina", rs.getObject("country_name").toString());
+			}
+			rs.close();
+			conn.close();
+		}
+		catch (SQLException ex){
+			System.out.println("SQL Exception ");
+		}
+		catch (ClassNotFoundException ex){
+			System.out.println(ex);
+		}
+		catch (Exception e){
+			System.out.println("***********Falleeeee*****************");
+		}
+		
 	}
 	
 }

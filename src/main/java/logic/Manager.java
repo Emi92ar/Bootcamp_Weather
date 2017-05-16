@@ -51,7 +51,7 @@ public class Manager {
 	private String longitude;
 	private String date;
 	private String temperature;
-	private DataBase db;
+	private DataBaseDao db;
 	
 	//I Use this Array to fill the information, 
 	//When I have the information of the URL, I will not need these array
@@ -152,7 +152,9 @@ public class Manager {
 		for(int i = 0; i<5; i++){
 			db.SetInfoDay(forecast.getDay(i));
 		}
-		db.SetInfoActual_Location(location.getCity());
+		//This entity is new by the relationship many to many
+		db.SetInfoActual_Location(location.getCity());// 
+		
 		db.ReadBdForecast(2);
 		db.ReadBdPlacesConsulted();
 	}

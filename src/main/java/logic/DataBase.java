@@ -15,7 +15,7 @@ import java.sql.Connection;
 
 import org.h2.tools.DeleteDbFiles;
 
-public class DataBase {
+public class DataBase implements DataBaseDao {
 	
 
 //	private String _user = "root"; 

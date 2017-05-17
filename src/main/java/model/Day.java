@@ -1,4 +1,4 @@
-package logic;
+package model;
 
 /**
  * This class is used to create an object of each day of the forecast

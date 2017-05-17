@@ -1,6 +1,13 @@
-package logic;
+package persistence;
 
-public interface DataBaseDao {
+import model.Actualday;
+import model.Day;
+import model.Actualday.Astronomy;
+import model.Actualday.Atmosphere;
+import model.Actualday.Location;
+import model.Actualday.Wind;
+
+public interface DataBaseDAO {
 	
 	//Inserts
 	public void SetInfoLocation(Actualday.Location loc);
@@ -12,7 +19,7 @@ public interface DataBaseDao {
 	public void SetInfoActual_Location(String city);
 	
 	// Reads
-	public void ReadBdForecast(int number);
+//	public void ReadBdForecast(int number);
 	public void ReadBdPlacesConsulted();
 
 }

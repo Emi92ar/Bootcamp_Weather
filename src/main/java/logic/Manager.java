@@ -9,6 +9,12 @@ import java.util.ArrayList;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
+import connections.DbConnection;
+import model.Actualday;
+import model.Day;
+import model.Forecast;
+import persistence.DataBaseDAO;
+import persistence.DataBaseMySQL;
 
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -51,7 +57,8 @@ public class Manager {
 	private String longitude;
 	private String date;
 	private String temperature;
-	private DataBaseDao db;
+	private DataBaseDAO db;
+	private DbConnection dbcon;
 	
 	//I Use this Array to fill the information, 
 	//When I have the information of the URL, I will not need these array
@@ -143,20 +150,36 @@ public class Manager {
 		wind = new Actualday.Wind(chill, direction, speed);		
 		atmosphere = new Actualday.Atmosphere(humidity, pressure, rising, visibility);
 		astronomy = new Actualday.Astronomy(sunrise, sunset);
-		db = DataBase.getInstance("com.mysql.jdbc.Driver","jdbc:mysql://localhost:3306", "root", "root");
-		db.SetInfoLocation(location);
-		db.SetInfoActualday(actual);
-		db.SetInfoWind(wind);
-		db.SetInfoAtmosphere(atmosphere);
-		db.SetInfoAstronomy(astronomy);
+		DataBaseMySQL dat = new DataBaseMySQL();
+		dat.SetInfoLocation(location);
+		dat.SetInfoActualday(actual);
+		dat.SetInfoWind(wind);
+		dat.SetInfoAtmosphere(atmosphere);
+		dat.SetInfoAstronomy(astronomy);
 		for(int i = 0; i<5; i++){
-			db.SetInfoDay(forecast.getDay(i));
+			dat.SetInfoDay(forecast.getDay(i));
 		}
 		//This entity is new by the relationship many to many
-		db.SetInfoActual_Location(location.getCity());// 
+		dat.SetInfoActual_Location(location.getCity());// 
 		
-		db.ReadBdForecast(2);
-		db.ReadBdPlacesConsulted();
+//		db.ReadBdForecast(2);
+		dat.ReadBdPlacesConsulted();
+		
+
+//		db = DataBase.getInstance("com.mysql.jdbc.Driver","jdbc:mysql://localhost:3306", "root", "root");
+//		db.SetInfoLocation(location);
+//		db.SetInfoActualday(actual);
+//		db.SetInfoWind(wind);
+//		db.SetInfoAtmosphere(atmosphere);
+//		db.SetInfoAstronomy(astronomy);
+//		for(int i = 0; i<5; i++){
+//			db.SetInfoDay(forecast.getDay(i));
+//		}
+//		//This entity is new by the relationship many to many
+//		db.SetInfoActual_Location(location.getCity());// 
+//		
+////		db.ReadBdForecast(2);
+//		db.ReadBdPlacesConsulted();
 	}
 	
 	public void PrintInformation(){

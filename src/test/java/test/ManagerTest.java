@@ -9,7 +9,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import logic.Manager;
-import logic.Actualday;
+import model.Actualday;
 
 public class ManagerTest {
 

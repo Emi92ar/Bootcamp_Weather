@@ -8,8 +8,8 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import logic.Forecast;
-import logic.Day;
+import model.Day;
+import model.Forecast;
 
 public class ForecastTest {
 

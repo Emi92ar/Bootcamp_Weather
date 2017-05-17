@@ -1,6 +1,5 @@
 package logic;
 import java.util.Scanner;
-
 import model.Actualday;
 /**
  * Main class
@@ -17,8 +16,8 @@ public class Main
         keyboardInput = scannerInput.nextLine();
         System.out.println ("You ask for: " + keyboardInput +".");
         Actualday.Location location = new Actualday.Location(keyboardInput);
-        Manager manager = new Manager(location);
-//        manager.PrintInformation();
+        Manager man = new Manager(location);
+        man.PrintInformation();
     }
 }
 

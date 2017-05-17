@@ -1,24 +1,17 @@
 package logic;
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.net.MalformedURLException;
-import java.net.URL;
+//import java.net.URL;
 import java.util.ArrayList;
 
-import com.mysql.jdbc.Connection;
-import com.mysql.jdbc.Statement;
+//import com.mysql.jdbc.Connection;
 
-import connections.DbConnection;
+
+//import connections.DbConnection;
 import model.Actualday;
 import model.Day;
 import model.Forecast;
 import persistence.DataBaseDAO;
 import persistence.DataBaseMySQL;
 
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 
 //import java.util.List;
@@ -38,7 +31,6 @@ public class Manager {
 	private Actualday.Wind wind;
 	private Actualday.Atmosphere atmosphere;
 	private Actualday.Astronomy astronomy;
-	private URL json;
 	
 	
 	//The following field is an example how this class store the information provided by the parsed
@@ -57,8 +49,9 @@ public class Manager {
 	private String longitude;
 	private String date;
 	private String temperature;
-	private DataBaseDAO db;
-	private DbConnection dbcon;
+//	private DataBaseDAO db;
+//	private DbConnection dbcon;
+	private DataBaseMySQL dat;
 	
 	//I Use this Array to fill the information, 
 	//When I have the information of the URL, I will not need these array
@@ -67,11 +60,11 @@ public class Manager {
 	private ArrayList<Float> tempMax;
 	private ArrayList<Day> daysList;
 
-	private String _user = "root"; 
-	private String _pwd = "root";
-	private static String _bd = "weatherr";
-	static String _url = "jdbc:mysql://localhost:3306/" /*+ _bd*/;
-	private Connection conn = null;
+//	private String _user = "root"; 
+//	private String _pwd = "root";
+//	private static String _bd = "weatherr";
+//	static String _url = "jdbc:mysql://localhost:3306/" /*+ _bd*/;
+//	private Connection conn = null;
 	
 	public Manager(Actualday.Location city_city){
 		//here the class call a method to go to URL with the name of the City
@@ -150,7 +143,7 @@ public class Manager {
 		wind = new Actualday.Wind(chill, direction, speed);		
 		atmosphere = new Actualday.Atmosphere(humidity, pressure, rising, visibility);
 		astronomy = new Actualday.Astronomy(sunrise, sunset);
-		DataBaseMySQL dat = new DataBaseMySQL();
+		dat = new DataBaseMySQL();
 		dat.SetInfoLocation(location);
 		dat.SetInfoActualday(actual);
 		dat.SetInfoWind(wind);

@@ -43,7 +43,7 @@ public class ForecastTest {
 		day_of_the_list = forecast.getDay(1);
 		assertEquals("Error in the day of the list asked temp max", 35, day_of_the_list.getTempMax(), 0.001);
 		assertEquals("Error in the day of the list asked tem min", 25, day_of_the_list.getTempMin(), 0.001);
-		assertEquals("Error in the day of the list asked thermal amplitude", 10, day_of_the_list.getThermal_amplitude(), 0.001);
+		assertEquals("Error in the day of the list asked thermal amplitude", 10, day_of_the_list.getThermalAmplitude(), 0.001);
 		assertEquals("Error in the day of the list asked name day", "sat", day_of_the_list.getDay());
 
 	}

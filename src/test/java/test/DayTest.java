@@ -41,7 +41,7 @@ public class DayTest {
 		Day day = new Day(30,10,"wed");
 		assertEquals("Max temperature error",30, day.getTempMax(), 0.001);
 		assertEquals("Min temperature error",10, day.getTempMin(), 0.001);
-		assertEquals("Thermal amplitude err",20, day.getThermal_amplitude(), 0.001);
+		assertEquals("Thermal amplitude err",20, day.getThermalAmplitude(), 0.001);
 	}
 	
 	@Test
@@ -53,6 +53,6 @@ public class DayTest {
 		assertEquals("fri", day.getDay());
 		assertEquals("Max temperature error", 10, day.getTempMax(), 0.001);
 		assertEquals("Min temperature error", -10, day.getTempMin(), 0.001);
-		assertEquals("Thermal amplitude err in negative case", 20, day.getThermal_amplitude(), 0.001);
+		assertEquals("Thermal amplitude err in negative case", 20, day.getThermalAmplitude(), 0.001);
 	}
 }

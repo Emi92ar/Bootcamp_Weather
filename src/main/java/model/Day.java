@@ -5,7 +5,7 @@ package model;
  * @author Emiliano Bentivegna
  * @version 24/04/2017
  */
-public class Day {
+public class Day{
 	private double tempmax;
 	private double tempmin;
 	private double thermal_amplitude;
@@ -32,14 +32,14 @@ public class Day {
 	}
 	public void setTempMax(double tempMax) {
 		tempmax = tempMax;
-		setThermal_amplitude();
+		setThermalAmplitude();
 	}
 	public double getTempMin() {
 		return tempmin;
 	}
 	public void setTempMin(double tempMin) {
 		tempmin = tempMin;
-		setThermal_amplitude();
+		setThermalAmplitude();
 	}
 	public String getDay() {
 		return day;
@@ -48,11 +48,11 @@ public class Day {
 		this.day = day;
 	}
 	
-	public void setThermal_amplitude(){
+	public void setThermalAmplitude(){
 		thermal_amplitude = (tempmax - (tempmin));
 	}
 	
-	public double getThermal_amplitude(){
+	public double getThermalAmplitude(){
 		return thermal_amplitude;
 	}
 	

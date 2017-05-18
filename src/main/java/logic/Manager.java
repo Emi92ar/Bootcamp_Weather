@@ -7,8 +7,12 @@ import java.util.ArrayList;
 
 //import connections.DbConnection;
 import model.Actualday;
+import model.ActualdayDAO;
+import model.ActualdayDAOImp;
 import model.Day;
 import model.Forecast;
+import model.ForecastDAO;
+import model.ForecastDAOImp;
 import persistence.DataBaseDAO;
 import persistence.DataBaseMySQL;
 
@@ -49,9 +53,7 @@ public class Manager {
 	private String longitude;
 	private String date;
 	private String temperature;
-//	private DataBaseDAO db;
-//	private DbConnection dbcon;
-	private DataBaseMySQL dat;
+	private DataBaseDAO dat;
 	
 	//I Use this Array to fill the information, 
 	//When I have the information of the URL, I will not need these array
@@ -59,12 +61,6 @@ public class Manager {
 	private ArrayList<Float> tempMin;
 	private ArrayList<Float> tempMax;
 	private ArrayList<Day> daysList;
-
-//	private String _user = "root"; 
-//	private String _pwd = "root";
-//	private static String _bd = "weatherr";
-//	static String _url = "jdbc:mysql://localhost:3306/" /*+ _bd*/;
-//	private Connection conn = null;
 	
 	public Manager(Actualday.Location city_city){
 		//here the class call a method to go to URL with the name of the City
@@ -143,36 +139,15 @@ public class Manager {
 		wind = new Actualday.Wind(chill, direction, speed);		
 		atmosphere = new Actualday.Atmosphere(humidity, pressure, rising, visibility);
 		astronomy = new Actualday.Astronomy(sunrise, sunset);
+		
+		ActualdayDAO actuall = new ActualdayDAOImp();
+		actuall.Insert(actual, astronomy, atmosphere, location, wind);
+		
+		ForecastDAO forecastt = new ForecastDAOImp();
+		forecastt.Insert(forecast);
+		
 		dat = new DataBaseMySQL();
-		dat.SetInfoLocation(location);
-		dat.SetInfoActualday(actual);
-		dat.SetInfoWind(wind);
-		dat.SetInfoAtmosphere(atmosphere);
-		dat.SetInfoAstronomy(astronomy);
-		for(int i = 0; i<5; i++){
-			dat.SetInfoDay(forecast.getDay(i));
-		}
-		//This entity is new by the relationship many to many
-		dat.SetInfoActual_Location(location.getCity());// 
-		
-//		db.ReadBdForecast(2);
 		dat.ReadBdPlacesConsulted();
-		
-
-//		db = DataBase.getInstance("com.mysql.jdbc.Driver","jdbc:mysql://localhost:3306", "root", "root");
-//		db.SetInfoLocation(location);
-//		db.SetInfoActualday(actual);
-//		db.SetInfoWind(wind);
-//		db.SetInfoAtmosphere(atmosphere);
-//		db.SetInfoAstronomy(astronomy);
-//		for(int i = 0; i<5; i++){
-//			db.SetInfoDay(forecast.getDay(i));
-//		}
-//		//This entity is new by the relationship many to many
-//		db.SetInfoActual_Location(location.getCity());// 
-//		
-////		db.ReadBdForecast(2);
-//		db.ReadBdPlacesConsulted();
 	}
 	
 	public void PrintInformation(){

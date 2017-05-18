@@ -13,6 +13,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import model.Actualday;
+import model.ActualdayDAO;
+import model.ActualdayDAOImp;
 import persistence.DataBaseH2;
 
 public class DataBaseH2Test {
@@ -51,7 +53,13 @@ public class DataBaseH2Test {
 		loc.setLatitude("-66");
 		loc.setLongitude("66");
 		loc.setRegion("Patagonia");
-		db.SetInfoLocation(loc);
+		ActualdayDAO actuall = new ActualdayDAOImp();
+		Actualday actual = new Actualday("22 tues", "55");
+		Actualday.Wind wind = new Actualday.Wind("20", "S", "55.2");		
+		Actualday.Atmosphere atmosphere = new Actualday.Atmosphere("89", "1023", "2016", "10,km");
+		Actualday.Astronomy astronomy = new Actualday.Astronomy("5:59", "20:50");
+		actuall.Insert(actual, astronomy, atmosphere, loc, wind);
+//		db.SetInfoLocation(loc);
 		try{
 			Statement st = (Statement) db.getCon().createStatement();
 			ResultSet rs = st.executeQuery("SELECT * from location "

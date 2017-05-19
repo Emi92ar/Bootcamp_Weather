@@ -31,14 +31,16 @@ public class DayTest {
 	
 	@Test
 	public void DayParamError() {
-		Day day = new Day(20,30,"wed");
+//		Day day = new Day(20,30,"wed");
+		Day day = new Day.DayBuilder(20, 30).day("wed").build();
 		assertEquals("Temp Max is lower than temp min",99999999, day.getTempMax(), 0.001);
 		assertEquals("Temp Max is lower than temp min",99999999, day.getTempMin(), 0.001);
 	}
 	
 	@Test
 	public void DayParamRight() {
-		Day day = new Day(30,10,"wed");
+//		Day day = new Day(30,10,"wed");
+		Day day = new Day.DayBuilder(30, 10).day("wed").build();
 		assertEquals("Max temperature error",30, day.getTempMax(), 0.001);
 		assertEquals("Min temperature error",10, day.getTempMin(), 0.001);
 		assertEquals("Thermal amplitude err",20, day.getThermalAmplitude(), 0.001);
@@ -46,7 +48,8 @@ public class DayTest {
 	
 	@Test
 	public void DaySettersFuntion() {
-		Day day = new Day(30,20,"wed");
+//		Day day = new Day(30,20,"wed");
+		Day day = new Day.DayBuilder(30, 20).day("wed").build();
 		day.setDay("fri");
 		day.setTempMax(10);
 		day.setTempMin(-10);

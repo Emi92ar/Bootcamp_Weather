@@ -30,14 +30,16 @@ public class ActualdayTest {
 
 	@Test
 	public void Actualday() {
-		Actualday actual = new Actualday("mon 11:00hs", "35");
+		Actualday actual = new Actualday.ActualdayBuilder().date("mon 11:00hs").temperature("35").build();
+//		Actualday actual = new Actualday("mon 11:00hs", "35");
 		assertEquals("Error in the day", "mon 11:00hs", actual.getDate());
 		assertEquals("Error in the temperature of the day", "35", actual.getTemperature());
 	}
 	
 	@Test
 	public void SettersAndGetterActualday() {
-		Actualday actual = new Actualday("mon 11:00hs", "35");
+		Actualday actual = new Actualday.ActualdayBuilder().date("mon 11:00hs").temperature("35").build();
+//		Actualday actual = new Actualday("mon 11:00hs", "35");
 		actual.setDate("fri 15:00hs");
 		actual.setTemperature("15");
 		assertEquals("Error in the day", "fri 15:00hs", actual.getDate());
@@ -67,7 +69,8 @@ public class ActualdayTest {
 	
 	@Test
 	public void Wind() {
-		Actualday.Wind wind = new Actualday.Wind("40", "N", "20.3");
+//		Actualday.Wind wind = new Actualday.Wind("40", "N", "20.3");
+		Actualday.Wind wind = new Actualday.WindBuilder().chill("40").direction("N").speed("20.3").build();
 		assertEquals("Error in chill", "40", wind.getChill());
 		assertEquals("Error in direction", "N", wind.getDirection());
 		assertEquals("Error in speed", "20.3", wind.getSpeed());
@@ -75,7 +78,8 @@ public class ActualdayTest {
 	
 	@Test
 	public void WindSettersAndGetters() {
-		Actualday.Wind wind = new Actualday.Wind("40", "N", "20.3");
+//		Actualday.Wind wind = new Actualday.Wind("40", "N", "20.3");
+		Actualday.Wind wind = new Actualday.WindBuilder().chill("40").direction("N").speed("20.3").build();
 		wind.setChill("55");
 		wind.setDirection("S");
 		wind.setSpeed("95");
@@ -86,8 +90,8 @@ public class ActualdayTest {
 	
 	@Test
 	public void Atmosphere() {
-		Actualday.Atmosphere at = new Actualday.Atmosphere("89", "1024", "600", "6.3");
-		
+//		Actualday.Atmosphere at = new Actualday.Atmosphere("89", "1024", "600", "6.3");
+		Actualday.Atmosphere at = new Actualday.AtmosphereBuilder().humidity("89").pressure("1024").rising("600").visibility("6.3").build();
 		assertEquals("Error in humidity", "89", at.getHumidity());
 		assertEquals("Error in pressure", "1024", at.getPressure());
 		assertEquals("Error in rising", "600", at.getRising());
@@ -96,7 +100,8 @@ public class ActualdayTest {
 	
 	@Test
 	public void AtmosphereSettersAndGetters() {
-		Actualday.Atmosphere at = new Actualday.Atmosphere("89", "1024", "600", "6.3");
+//		Actualday.Atmosphere at = new Actualday.Atmosphere("89", "1024", "600", "6.3");
+		Actualday.Atmosphere at = new Actualday.AtmosphereBuilder().humidity("89").pressure("1024").rising("600").visibility("6.3").build();
 		at.setHumidity("99");
 		at.setPressure("1020");
 		at.setRising("630");
@@ -109,7 +114,8 @@ public class ActualdayTest {
 	
 	@Test
 	public void Astronomy() {
-		Actualday.Astronomy as = new Actualday.Astronomy("6:00", "19:00");
+//		Actualday.Astronomy as = new Actualday.Astronomy("6:00", "19:00");
+		Actualday.Astronomy as = new Actualday.AstronomyBuilder().sunrise("6:00").sunset("19:00").build();
 		assertEquals("Error in sunrise", "6:00", as.getSunrise());
 		assertEquals("Error in sunset", "19:00", as.getSunset());
 		
@@ -117,7 +123,8 @@ public class ActualdayTest {
 	
 	@Test
 	public void AstronomySettersAndGetters() {
-		Actualday.Astronomy as = new Actualday.Astronomy("6:00", "19:00");
+//		Actualday.Astronomy as = new Actualday.Astronomy("6:00", "19:00");
+		Actualday.Astronomy as = new Actualday.AstronomyBuilder().sunrise("6:00").sunset("19:00").build();
 		as.setSunrise("7:00");
 		as.setSunset("18:00");
 		assertEquals("Error in sunrise", "7:00", as.getSunrise());

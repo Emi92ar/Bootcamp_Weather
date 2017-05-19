@@ -32,4 +32,5 @@ public class Forecast {
 	public int AmountDay(){
 		return days.size();
 	}
+	
 }

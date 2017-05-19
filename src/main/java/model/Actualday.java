@@ -7,11 +7,16 @@ public class Actualday {
 	private String temperature;
 
 	// Class constructor 
-	public Actualday(String date, String temperature){
-		this.date = date;
-		this.temperature = temperature;
-	}
+//	public Actualday(String date, String temperature){
+//		this.date = date;
+//		this.temperature = temperature;
+//	}
 	
+	private Actualday(ActualdayBuilder builder) {
+		this.date = builder.date;
+		this.temperature = builder.temperature;
+	}
+
 	public String getTemperature() {
 		return temperature;
 	}
@@ -28,6 +33,27 @@ public class Actualday {
 	public String toString(){
 		return "Information about the object Actual Day\n Date :" + getDate() + "\n Temperature " + getTemperature();
 	}
+	
+	//------------------------------------Builder-------------------------------------------------
+	public static class ActualdayBuilder {														//
+		private String date;																	//
+		private String temperature;																//
+																								//
+		public ActualdayBuilder date(String date){												//
+			this.date = date;																	//
+			return this;																		//
+		}																						//
+																								//
+		public ActualdayBuilder temperature(String temperature){								//
+			this.temperature = temperature;														//
+			return this;																		//
+		}																						//
+																								//
+		public Actualday build(){																//
+			return new Actualday(this);															//
+		}																						//
+	}																							//
+	//------------------------------------Builder-------------------------------------------------
 	
 	
 	// Nested class
@@ -82,15 +108,25 @@ public class Actualday {
 		}
 	}
 	
+	//------------------------------------Builder-------------------------------------------------
+	public static class LocationBuilder{
+		
+	}
+	//------------------------------------Builder-------------------------------------------------
 	public static class Wind{
 		private String chill;
 		private String direction;
 		private String speed;
 		
-		public Wind(String chill, String direction, String speed){
-			this.chill = chill;
-			this.direction = direction;
-			this.speed = speed;
+//		public Wind(String chill, String direction, String speed){
+//			this.chill = chill;
+//			this.direction = direction;
+//			this.speed = speed;
+//		}
+		private Wind(WindBuilder builderwind){
+			this.chill = builderwind.chill;
+			this.direction = builderwind.direction;
+			this.speed = builderwind.speed;
 		}
 		
 		public String getChill() {
@@ -115,25 +151,56 @@ public class Actualday {
 			return "\nInformation about the object Wind\n Chill "+ getChill() + "\n Direction " + getDirection() + "\n Speed " + getSpeed();
 		}
 	}
-	
+	//------------------------------------Builder-------------------------------------------------
+	public static class WindBuilder{
+		private String chill;
+		private String direction;
+		private String speed;
+		
+		public WindBuilder chill(String chill){													//
+			this.chill = chill;																	//
+			return this;																		//
+		}																						//
+																								//
+		public WindBuilder direction(String direction){											//
+			this.direction = direction;															//
+			return this;																		//
+		}																						//
+		
+		public WindBuilder speed(String speed){													//
+			this.speed = speed;																	//
+			return this;																		//
+		}	
+		public Wind build(){																	//
+			return new Wind(this);																//
+		}				
+	}
+	//------------------------------------Builder-------------------------------------------------
 	public static class Atmosphere{
-		private String Humidity;
+		private String humidity;
 		private String pressure;
 		private String rising;
 		private String visibility;
 		
-		public Atmosphere(String Humidity, String pressure, String rising, String visibility){
-			this.Humidity = Humidity;
-			this.pressure = pressure;
-			this.rising = rising;
-			this.visibility = visibility;
+//		public Atmosphere(String Humidity, String pressure, String rising, String visibility){
+//			this.Humidity = Humidity;
+//			this.pressure = pressure;
+//			this.rising = rising;
+//			this.visibility = visibility;
+//		}
+		private Atmosphere(AtmosphereBuilder atBuilder){
+			this.humidity = atBuilder.humidity;
+			this.pressure = atBuilder.pressure;
+			this.rising = atBuilder.rising;
+			this.visibility = atBuilder.visibility;
 		}
 		
+		
 		public String getHumidity() {
-			return Humidity;
+			return humidity;
 		}
-		public void setHumidity(String Humidity) {
-			this.Humidity = Humidity;
+		public void setHumidity(String humidity) {
+			this.humidity = humidity;
 		}
 		public String getPressure() {
 			return pressure;
@@ -159,13 +226,50 @@ public class Actualday {
 		}
 	}
 	
+	//------------------------------------Builder-------------------------------------------------
+	public static class AtmosphereBuilder{														//
+		private String humidity;																//
+		private String pressure;																//
+		private String rising;																	//
+		private String visibility;																//
+		
+		public AtmosphereBuilder humidity(String humidity){										//
+			this.humidity = humidity;															//
+			return this;																		//
+		}																						//
+																								//
+		public AtmosphereBuilder pressure(String pressure){										//
+			this.pressure = pressure;															//
+			return this;																		//
+		}																						//
+		
+		public AtmosphereBuilder rising(String rising){											//
+			this.rising = rising;																//
+			return this;																		//
+		}	
+		
+		public AtmosphereBuilder visibility(String visibility){									//
+			this.visibility = visibility;														//
+			return this;																		//
+		}	
+		
+		public Atmosphere build(){																//
+			return new Atmosphere(this);														//
+		}			
+	}
+	//------------------------------------Builder-------------------------------------------------
 	public static class Astronomy{
 		private String sunrise;
 		private String sunset;
 		
-		public Astronomy(String sunrise, String sunset){
-			this.sunrise = sunrise;
-			this.sunset = sunset;
+//		public Astronomy(String sunrise, String sunset){
+//			this.sunrise = sunrise;
+//			this.sunset = sunset;
+//		}
+		
+		private Astronomy(AstronomyBuilder asBuilder){
+			this.sunrise = asBuilder.sunrise;
+			this.sunset = asBuilder.sunset;
 		}
 		
 		public String getSunrise() {
@@ -186,4 +290,24 @@ public class Actualday {
 		}
 	}
 	
+	//------------------------------------Builder-------------------------------------------------
+	public static class AstronomyBuilder{														//
+		private String sunrise;
+		private String sunset;																	//																//
+		
+		public AstronomyBuilder sunrise(String sunrise){										//
+			this.sunrise = sunrise;																//
+			return this;																		//
+		}																						//
+																								//
+		public AstronomyBuilder sunset(String sunset){											//
+			this.sunset = sunset;																//
+			return this;																		//
+		}																						//
+		
+		public Astronomy build(){																//
+			return new Astronomy(this);															//
+		}			
+	}
+	//------------------------------------Builder-------------------------------------------------
 }

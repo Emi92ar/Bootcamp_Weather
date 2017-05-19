@@ -126,7 +126,8 @@ public class Manager {
 		location.setLongitude(longitude);
 		//Creating the information about the forecast of each day
 		for(int i=0; i < 5 ; i++){
-			daysList.add(i, new Day(tempMax.get(i), tempMin.get(i), days.get(i)));
+//			daysList.add(i, new Day(tempMax.get(i), tempMin.get(i), days.get(i)));
+			daysList.add(i, new Day.DayBuilder(tempMax.get(i), tempMin.get(i)).day(days.get(i)).build());
 		}
 		//Creating the ArrayList with the forecast
 		forecast = new Forecast();
@@ -135,10 +136,18 @@ public class Manager {
 			forecast.Adding_days(daysList.get(i));
 		}
 		//Creating the information about that day
-		actual = new Actualday(date, temperature);
-		wind = new Actualday.Wind(chill, direction, speed);		
-		atmosphere = new Actualday.Atmosphere(humidity, pressure, rising, visibility);
-		astronomy = new Actualday.Astronomy(sunrise, sunset);
+//		actual = new Actualday(date, temperature);
+//		wind = new Actualday.Wind(chill, direction, speed);	
+//		atmosphere = new Actualday.Atmosphere(humidity, pressure, rising, visibility);
+//		astronomy = new Actualday.Astronomy(sunrise, sunset);
+		
+		
+		actual = new Actualday.ActualdayBuilder().date(date).temperature(temperature).build();
+		wind = new Actualday.WindBuilder().chill(chill).direction(direction).speed(speed).build();
+		atmosphere = new Actualday.AtmosphereBuilder().humidity(humidity).pressure(pressure).rising(rising).visibility(visibility).build();
+		astronomy = new Actualday.AstronomyBuilder().sunrise(sunrise).sunset(sunset).build();
+		
+		
 		
 		ActualdayDAO actuall = new ActualdayDAOImp();
 		actuall.Insert(actual, astronomy, atmosphere, location, wind);

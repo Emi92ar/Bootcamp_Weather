@@ -5,6 +5,7 @@ public class Actualday {
 
 	private String date;
 	private String temperature;
+	private Wind wind;
 
 	// Class constructor 
 //	public Actualday(String date, String temperature){
@@ -34,6 +35,14 @@ public class Actualday {
 		return "Information about the object Actual Day\n Date :" + getDate() + "\n Temperature " + getTemperature();
 	}
 	
+	public Wind getWind() {
+		return wind;
+	}
+
+	public void setWind(Wind wind) {
+		this.wind = wind;
+	}
+
 	//------------------------------------Builder-------------------------------------------------
 	public static class ActualdayBuilder {														//
 		private String date;																	//

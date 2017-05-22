@@ -6,17 +6,24 @@ import java.io.FileReader;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
 import connections.DbConnection;
-
+@Component
 public class DataBaseMySQL implements DataBaseDAO {
 	
 	
 	private Connection con;
 	private BufferedReader br;
 	private String _dbName;
+	@Autowired
+	private DbConnection dbconnection;
+	
+//	private DbConnection connection; //same name xml
 	/*
 	 * Create the Data Base if not exists and the connection with the DB
 	 */
@@ -28,8 +35,14 @@ public class DataBaseMySQL implements DataBaseDAO {
 		    String[] temp = line.split("\\s+");
 		    _dbName = temp[5];
 		    //In the next line I will connect to the db
-		    con = (Connection) DbConnection.getInstance("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306", "root", "root").getConnection();
+//		    con = (Connection) DbConnection.getInstance("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306", "root", "root").getConnection();
+		    /*con =
+		     * Este seria el que se crea solo, seria como mi Clase A
+		     *  */
+//		    con = (Connection) dbconnection;
+		    con = (Connection) dbconnection;
 		    Statement st = (Statement) con.createStatement();
+//		    Statement st = (Statement) connection.getConnection().createStatement();
 		    while (line != null) {
 //		    	System.out.println(line);
 		    	st.executeUpdate(line);
@@ -48,6 +61,10 @@ public class DataBaseMySQL implements DataBaseDAO {
 		}
 	}
 	
+	
+	public void CreateConnect(DbConnection dbConnection){
+		con = (Connection) dbConnection;
+	}
 	
 	public void ReadBdPlacesConsulted(){
 		try{

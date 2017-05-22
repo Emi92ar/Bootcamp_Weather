@@ -7,16 +7,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.h2.tools.DeleteDbFiles;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import connections.DbConnection;
 
 import java.sql.Statement;
 import java.sql.Connection;
-
+@Component 
 public class DataBaseH2 implements DataBaseDAO {
 	private Connection con;
 	private BufferedReader br;
 	private String _dbName;
+	@Autowired
+	private DbConnection connection;
 	/*
 	 * Data Base to test the logic
 	 */
@@ -26,8 +30,9 @@ public class DataBaseH2 implements DataBaseDAO {
 			br = new BufferedReader(new FileReader("src/main/resources/dbScript"));
 		    String line = br.readLine();
 		    //In the next line I will connect to the db
-		    con = DbConnection.getInstance("org.h2.Driver", "jdbc:h2:~/weatherr", "root", "root").getConnection();
-		    Statement st = (Statement) con.createStatement();
+//		    con = DbConnection.getInstance("org.h2.Driver", "jdbc:h2:~/weatherr", "root", "root").getConnection();
+//		    Statement st = (Statement) con.createStatement();
+		    Statement st = (Statement) connection.getConnection().createStatement();
 		    String[] temp = line.split("\\s+");
 		    _dbName = temp[5];
 		    //Skip the first two lines of the script because they are to create the database and use 

@@ -2,6 +2,9 @@ package logic;
 //import java.net.URL;
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 //import com.mysql.jdbc.Connection;
 
 
@@ -26,6 +29,7 @@ import persistence.DataBaseMySQL;
  * @author Emiliano Bentivegna
  * @version 24/04/2017
  */
+@Component
 public class Manager {
 	
 	private String city; //It will used to ask in the URL
@@ -53,6 +57,7 @@ public class Manager {
 	private String longitude;
 	private String date;
 	private String temperature;
+	@Autowired
 	private DataBaseDAO dat;
 	
 	//I Use this Array to fill the information, 
@@ -144,6 +149,7 @@ public class Manager {
 		
 		actual = new Actualday.ActualdayBuilder().date(date).temperature(temperature).build();
 		wind = new Actualday.WindBuilder().chill(chill).direction(direction).speed(speed).build();
+		actual.setWind(wind);
 		atmosphere = new Actualday.AtmosphereBuilder().humidity(humidity).pressure(pressure).rising(rising).visibility(visibility).build();
 		astronomy = new Actualday.AstronomyBuilder().sunrise(sunrise).sunset(sunset).build();
 		
@@ -155,7 +161,7 @@ public class Manager {
 		ForecastDAO forecastt = new ForecastDAOImp();
 		forecastt.Insert(forecast);
 		
-		dat = new DataBaseMySQL();
+//		dat = new DataBaseMySQL();
 		dat.ReadBdPlacesConsulted();
 	}
 	

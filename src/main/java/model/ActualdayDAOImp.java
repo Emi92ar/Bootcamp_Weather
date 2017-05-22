@@ -2,17 +2,23 @@ package model;
 
 import java.sql.Connection;
 import java.sql.Statement;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import persistence.DataBaseDAO;
 import persistence.DataBaseMySQL;
-
+@Component
 public class ActualdayDAOImp implements ActualdayDAO{
+	@Autowired
 	private DataBaseDAO dat;
+	@Autowired
 	private Connection con;
 	
-	public ActualdayDAOImp(){
-		//Call to DataBase MySQL, create if not exists and create the connection
-		dat = new DataBaseMySQL();
-	}
+//	public ActualdayDAOImp(){
+//		//Call to DataBase MySQL, create if not exists and create the connection
+//		dat = new DataBaseMySQL();
+//	}
 	
 	public void Insert(Actualday actual, Actualday.Astronomy astro, Actualday.Atmosphere atmos, Actualday.Location loc, Actualday.Wind wind){
 		try{

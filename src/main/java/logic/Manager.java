@@ -59,6 +59,8 @@ public class Manager {
 	private String temperature;
 	@Autowired
 	private DataBaseMySQL dat;
+	@Autowired
+	ActualdayDAO actuall;
 //	private DataBaseDAO dat;
 	
 	//I Use this Array to fill the information, 
@@ -156,7 +158,7 @@ public class Manager {
 		
 		
 		
-		ActualdayDAO actuall = new ActualdayDAOImp();
+//		ActualdayDAO actuall = new ActualdayDAOImp();
 		actuall.Insert(actual, astronomy, atmosphere, location, wind);
 		
 		ForecastDAO forecastt = new ForecastDAOImp();

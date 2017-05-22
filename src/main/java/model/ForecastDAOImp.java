@@ -5,16 +5,22 @@ import persistence.DataBaseDAO;
 import persistence.DataBaseMySQL;
 
 import java.sql.Statement;
-import java.sql.Connection;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.sql.Connection;
+@Component
 public class ForecastDAOImp implements ForecastDAO{
+	@Autowired
 	private DataBaseDAO dat;
+	@Autowired
 	private Connection con;
 	
-	public ForecastDAOImp(){
-		//Call to DataBase MySQL, create if not exists and create the connection
-		dat = new DataBaseMySQL();
-	}
+//	public ForecastDAOImp(){
+//		//Call to DataBase MySQL, create if not exists and create the connection
+//		dat = new DataBaseMySQL();
+//	}
 	
 	public void Insert(Forecast forecast){
 		try{

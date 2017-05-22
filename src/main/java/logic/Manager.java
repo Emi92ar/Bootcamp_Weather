@@ -58,7 +58,8 @@ public class Manager {
 	private String date;
 	private String temperature;
 	@Autowired
-	private DataBaseDAO dat;
+	private DataBaseMySQL dat;
+//	private DataBaseDAO dat;
 	
 	//I Use this Array to fill the information, 
 	//When I have the information of the URL, I will not need these array

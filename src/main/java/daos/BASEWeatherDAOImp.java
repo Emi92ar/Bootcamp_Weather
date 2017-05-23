@@ -4,15 +4,21 @@ package daos;
 import java.sql.Connection;
 import java.sql.Statement;
 
-import persistence.DataBaseMySQL;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import persistence.DataBaseMySQL;
+@Component
 public abstract class BASEWeatherDAOImp {
 	
+	@Autowired
 	protected DataBaseDAO dat;
+	
+	@Autowired
 	protected Connection con;
 	
 	public BASEWeatherDAOImp(){
-		dat = new DataBaseMySQL();
+//		dat = new DataBaseMySQL();
 	}
 	
 	public void InsertGeneric(String insertImpl){

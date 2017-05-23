@@ -1,6 +1,9 @@
 package logic;
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import daos.ActualdayDAOImp;
 import daos.AstronomyDAOImp;
 import daos.AtmosphereDAOImp;
@@ -22,6 +25,7 @@ import persistence.DataBaseMySQL;
  * @author Emiliano Bentivegna
  * @version 24/04/2017
  */
+@Component
 public class Manager {
 	
 	private String city; //It will used to ask in the URL
@@ -49,6 +53,8 @@ public class Manager {
 	private String longitude;
 	private String date;
 	private String temperature;
+	
+	@Autowired
 	private DataBaseMySQL dat;
 
 	
@@ -59,30 +65,23 @@ public class Manager {
 	private ArrayList<Float> tempMax;
 	private ArrayList<Day> daysList;
 	
-	public Manager(Actualday.Location city_city){
+	public Manager(/*Actualday.Location city_city*/){
 		//here the class call a method to go to URL with the name of the City
-		this.city = city_city.getCity();
-		location = city_city;
+//		this.city = city_city.getCity();
+//		location = city_city;
 		days = new ArrayList<String>();
 		daysList = new ArrayList<Day>();
 		tempMin = new ArrayList<Float>();
 		tempMax = new ArrayList<Float>();
-	
-		AskForYahooForecast("yahoo");
-		ParserInfo();
-		CreateNodesWithInfo();
+		
+//		AskForYahooForecast("yahoo");
+//		ParserInfo();
+//		CreateNodesWithInfo();
 	}
 	
 	// Will return the information from the URL. It is not a void method
 	public void AskForYahooForecast(String city){
-//		try{
-//			json = new URL("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22nome%2C%20ak%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys");
-//			
-//		}
-//		catch (MalformedURLException e) {
-//		    System.out.println("Hubo un error con el link");		
-//		}
-		//ObjectMapper mapper = new ObjectMapper();
+
 	}
 	//With this method I want parse the information provided by Yahoo URL
 	// Or maybe I will use some framework to do this 
@@ -114,6 +113,12 @@ public class Manager {
 		}
 	}
 	
+	public void setLocation(Actualday.Location location){
+		this.location = location;
+	}
+	
+
+	
 	public void CreateNodesWithInfo(){
 		
 		//Filling the missing information in the object location
@@ -121,6 +126,8 @@ public class Manager {
 		location.setRegion(region);
 		location.setLatitude(latitude);
 		location.setLongitude(longitude);
+		city = location.getCity();
+		location.setCity(city);
 		//Creating the information about the forecast of each day
 		for(int i=0; i < 5 ; i++){
 //			daysList.add(i, new Day(tempMax.get(i), tempMin.get(i), days.get(i)));
@@ -164,7 +171,7 @@ public class Manager {
 		WeatherDAO forecastt = new ForecastDAOImp();
 		forecastt.Insert(forecast);
 		
-		dat = new DataBaseMySQL();
+//		dat = new DataBaseMySQL();
 		dat.ReadBdPlacesConsulted();
 	}
 	

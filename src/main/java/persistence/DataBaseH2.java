@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import connections.DbConnection;
+import daos.DataBaseDAO;
 
 import java.sql.Statement;
 import java.sql.Connection;

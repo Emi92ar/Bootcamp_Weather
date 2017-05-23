@@ -6,13 +6,10 @@ public class Actualday {
 	private String date;
 	private String temperature;
 	private Wind wind;
+	private Atmosphere atmosphere;
+	private Astronomy astronomy;
+	private Location location;
 
-	// Class constructor 
-//	public Actualday(String date, String temperature){
-//		this.date = date;
-//		this.temperature = temperature;
-//	}
-	
 	private Actualday(ActualdayBuilder builder) {
 		this.date = builder.date;
 		this.temperature = builder.temperature;
@@ -41,6 +38,30 @@ public class Actualday {
 
 	public void setWind(Wind wind) {
 		this.wind = wind;
+	}
+
+	public Atmosphere getAtmosphere() {
+		return atmosphere;
+	}
+
+	public void setAtmosphere(Atmosphere atmosphere) {
+		this.atmosphere = atmosphere;
+	}
+
+	public Astronomy getAstronomy() {
+		return astronomy;
+	}
+
+	public void setAstronomy(Astronomy astronomy) {
+		this.astronomy = astronomy;
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
 	}
 
 	//------------------------------------Builder-------------------------------------------------
@@ -127,11 +148,6 @@ public class Actualday {
 		private String direction;
 		private String speed;
 		
-//		public Wind(String chill, String direction, String speed){
-//			this.chill = chill;
-//			this.direction = direction;
-//			this.speed = speed;
-//		}
 		private Wind(WindBuilder builderwind){
 			this.chill = builderwind.chill;
 			this.direction = builderwind.direction;
@@ -191,12 +207,6 @@ public class Actualday {
 		private String rising;
 		private String visibility;
 		
-//		public Atmosphere(String Humidity, String pressure, String rising, String visibility){
-//			this.Humidity = Humidity;
-//			this.pressure = pressure;
-//			this.rising = rising;
-//			this.visibility = visibility;
-//		}
 		private Atmosphere(AtmosphereBuilder atBuilder){
 			this.humidity = atBuilder.humidity;
 			this.pressure = atBuilder.pressure;
@@ -270,11 +280,6 @@ public class Actualday {
 	public static class Astronomy{
 		private String sunrise;
 		private String sunset;
-		
-//		public Astronomy(String sunrise, String sunset){
-//			this.sunrise = sunrise;
-//			this.sunset = sunset;
-//		}
 		
 		private Astronomy(AstronomyBuilder asBuilder){
 			this.sunrise = asBuilder.sunrise;

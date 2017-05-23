@@ -14,20 +14,6 @@ public class Day{
 
 	private String day;
 	
-	//Class constructor 
-//	public Day(double tempmax, double tempmin, String day){
-//		if(tempmax < tempmin){
-//			// If this condition is true, there is an error, so I set the default values
-//			this.tempmax = 99999999;
-//			this.tempmin = 99999999;
-//		}
-//		else{
-//			this.tempmax = tempmax;
-//			this.tempmin = tempmin;
-//			thermal_amplitude = tempmax - tempmin;
-//			this.day = day;
-//		}
-//	}
 	private Day(DayBuilder dayBuilder){
 		this.tempmax = dayBuilder.tempmax;
 		this.tempmin = dayBuilder.tempmin;

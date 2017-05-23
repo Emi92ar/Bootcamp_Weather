@@ -11,11 +11,10 @@ import model.Actualday;
  * Main class
  *@author Emiliano Bentivegna
  */
-@Component
+
 public class Main 
 {
-	@Autowired
-	private static Manager man; 
+
 	
     public static void main( String[] args )
     {	
@@ -31,7 +30,7 @@ public class Main
         System.out.println ("You ask for: " + keyboardInput +".");
         Actualday.Location location = new Actualday.Location(keyboardInput);
         
-//        Manager man = new Manager(location);
+        Manager man = new Manager(location);
         man.PrintInformation();
     }
 }

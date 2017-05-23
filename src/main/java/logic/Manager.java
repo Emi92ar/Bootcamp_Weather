@@ -1,27 +1,20 @@
 package logic;
-//import java.net.URL;
 import java.util.ArrayList;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import daos.ActualdayDAOImp;
+import daos.AstronomyDAOImp;
+import daos.AtmosphereDAOImp;
+import daos.ForecastDAOImp;
+import daos.LocationDAOImp;
+import daos.WeatherDAO;
+import daos.WindDAOImp;
 
-//import com.mysql.jdbc.Connection;
-
-
-//import connections.DbConnection;
 import model.Actualday;
-import model.ActualdayDAO;
-import model.ActualdayDAOImp;
 import model.Day;
 import model.Forecast;
-import model.ForecastDAO;
-import model.ForecastDAOImp;
-import persistence.DataBaseDAO;
 import persistence.DataBaseMySQL;
 
 
-
-//import java.util.List;
 
 /**
  * The manager is in charge of checking the weather 
@@ -29,7 +22,6 @@ import persistence.DataBaseMySQL;
  * @author Emiliano Bentivegna
  * @version 24/04/2017
  */
-@Component
 public class Manager {
 	
 	private String city; //It will used to ask in the URL
@@ -57,11 +49,8 @@ public class Manager {
 	private String longitude;
 	private String date;
 	private String temperature;
-	@Autowired
 	private DataBaseMySQL dat;
-	@Autowired
-	ActualdayDAO actuall;
-//	private DataBaseDAO dat;
+
 	
 	//I Use this Array to fill the information, 
 	//When I have the information of the URL, I will not need these array
@@ -143,28 +132,39 @@ public class Manager {
 		for(int i = 0; i < 5 ; i ++){
 			forecast.Adding_days(daysList.get(i));
 		}
+
 		//Creating the information about that day
-//		actual = new Actualday(date, temperature);
-//		wind = new Actualday.Wind(chill, direction, speed);	
-//		atmosphere = new Actualday.Atmosphere(humidity, pressure, rising, visibility);
-//		astronomy = new Actualday.Astronomy(sunrise, sunset);
-		
-		
 		actual = new Actualday.ActualdayBuilder().date(date).temperature(temperature).build();
+		actual.setLocation(location);
+		
 		wind = new Actualday.WindBuilder().chill(chill).direction(direction).speed(speed).build();
 		actual.setWind(wind);
+		
 		atmosphere = new Actualday.AtmosphereBuilder().humidity(humidity).pressure(pressure).rising(rising).visibility(visibility).build();
+		actual.setAtmosphere(atmosphere);
+		
 		astronomy = new Actualday.AstronomyBuilder().sunrise(sunrise).sunset(sunset).build();
+		actual.setAstronomy(astronomy);
 		
+		WeatherDAO actuall = new ActualdayDAOImp();
+		actuall.Insert(actual);
 		
+		WeatherDAO atmospheree = new AtmosphereDAOImp();
+		atmospheree.Insert(atmosphere);
 		
-//		ActualdayDAO actuall = new ActualdayDAOImp();
-		actuall.Insert(actual, astronomy, atmosphere, location, wind);
+		WeatherDAO astronomyy = new AstronomyDAOImp();
+		astronomyy.Insert(astronomy);
 		
-		ForecastDAO forecastt = new ForecastDAOImp();
+		WeatherDAO windd = new WindDAOImp();
+		windd.Insert(wind);
+		
+		WeatherDAO locationn = new LocationDAOImp();
+		locationn.Insert(location);
+		
+		WeatherDAO forecastt = new ForecastDAOImp();
 		forecastt.Insert(forecast);
 		
-//		dat = new DataBaseMySQL();
+		dat = new DataBaseMySQL();
 		dat.ReadBdPlacesConsulted();
 	}
 	

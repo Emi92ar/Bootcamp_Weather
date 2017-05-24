@@ -21,5 +21,9 @@
 
 
 <!-- 	<context:component-scan base-package="src.main.java.conennections, src.main.java.logic, src.main.java.model, src.main.java.persistence " /> -->
-	<context:component-scan base-package="conennections, logic, model, persistence " />
+	<context:component-scan base-package="connections"/>
+	<context:component-scan base-package="logic"/>
+	<context:component-scan base-package="model"/>
+	<context:component-scan base-package="persistence"/>
+	<context:component-scan base-package="daos"/>
 </beans>

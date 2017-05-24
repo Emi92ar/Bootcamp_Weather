@@ -24,7 +24,7 @@ public class DbConnection {
 	 * @param _user User
 	 * @param _pwd Password
 	 */
-	public DbConnection(){
+	public void CreateDbConnection(){
 		try{
 			this._driver = "com.mysql.jdbc.Driver";	//com.mysql.jdbc.Driver
 			this._url = "jdbc:mysql://localhost:3306";			// 

@@ -1,7 +1,8 @@
-package logic;
+/*package logic;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import daos.ActualdayDAOImp;
@@ -16,7 +17,7 @@ import model.Actualday;
 import model.Day;
 import model.Forecast;
 import persistence.DataBaseMySQL;
-
+*/
 
 
 /**
@@ -25,7 +26,7 @@ import persistence.DataBaseMySQL;
  * @author Emiliano Bentivegna
  * @version 24/04/2017
  */
-@Component
+/*@Component
 public class Manager {
 	
 	private String city; //It will used to ask in the URL
@@ -55,6 +56,7 @@ public class Manager {
 	private String temperature;
 	
 	@Autowired
+	@Qualifier("dat")
 	private DataBaseMySQL dat;
 
 	
@@ -65,28 +67,27 @@ public class Manager {
 	private ArrayList<Float> tempMax;
 	private ArrayList<Day> daysList;
 	
-	public Manager(/*Actualday.Location city_city*/){
+	public Manager(/*Actualday.Location city_city*//*){*/
 		//here the class call a method to go to URL with the name of the City
 //		this.city = city_city.getCity();
-//		location = city_city;
-		days = new ArrayList<String>();
+//		location = city_city;*/
+		/*days = new ArrayList<String>();
 		daysList = new ArrayList<Day>();
 		tempMin = new ArrayList<Float>();
-		tempMax = new ArrayList<Float>();
-		
+		tempMax = new ArrayList<Float>();*/
 //		AskForYahooForecast("yahoo");
 //		ParserInfo();
 //		CreateNodesWithInfo();
-	}
+	/*}*/
 	
 	// Will return the information from the URL. It is not a void method
-	public void AskForYahooForecast(String city){
+	/*public void AskForYahooForecast(String city){
 
-	}
+	}*/
 	//With this method I want parse the information provided by Yahoo URL
 	// Or maybe I will use some framework to do this 
 	//Now fill the information manually to corroborate the functionality of the objects 
-	public void ParserInfo(){		
+	/*public void ParserInfo(){		
 		sunrise ="19:00hs";
 		sunset = "7:00hs";
 		humidity = "72";
@@ -119,24 +120,23 @@ public class Manager {
 	
 
 	
-	public void CreateNodesWithInfo(){
+	public void CreateNodesWithInfo(){*/
 		
 		//Filling the missing information in the object location
-		location.setCountry(country);
+		/*location.setCountry(country);
 		location.setRegion(region);
 		location.setLatitude(latitude);
-		location.setLongitude(longitude);
-		city = location.getCity();
-		location.setCity(city);
+		location.setLongitude(longitude);*/
+//		city = location.getCity();
+//		location.setCity(city);
 		//Creating the information about the forecast of each day
-		for(int i=0; i < 5 ; i++){
-//			daysList.add(i, new Day(tempMax.get(i), tempMin.get(i), days.get(i)));
+		/*for(int i=0; i < 5 ; i++){
 			daysList.add(i, new Day.DayBuilder(tempMax.get(i), tempMin.get(i)).day(days.get(i)).build());
-		}
+		}/*
 		//Creating the ArrayList with the forecast
-		forecast = new Forecast();
+		/*forecast = new Forecast();*/
 		// Here I create the 5 days (one object for each one) of the forecast
-		for(int i = 0; i < 5 ; i ++){
+		/*for(int i = 0; i < 5 ; i ++){
 			forecast.Adding_days(daysList.get(i));
 		}
 
@@ -153,6 +153,7 @@ public class Manager {
 		astronomy = new Actualday.AstronomyBuilder().sunrise(sunrise).sunset(sunset).build();
 		actual.setAstronomy(astronomy);
 		
+		//The followings created they should be implemented using spring 
 		WeatherDAO actuall = new ActualdayDAOImp();
 		actuall.Insert(actual);
 		
@@ -170,12 +171,11 @@ public class Manager {
 		
 		WeatherDAO forecastt = new ForecastDAOImp();
 		forecastt.Insert(forecast);
-		
-//		dat = new DataBaseMySQL();
-		dat.ReadBdPlacesConsulted();
 	}
 	
 	public void PrintInformation(){
+//		dat = new DataBaseMySQL();
+		dat.ReadBdPlacesConsulted();
 		System.out.println(actual); 
 		System.out.println(location);
 		System.out.println(wind);
@@ -186,4 +186,4 @@ public class Manager {
 			System.out.println(forecast.getDay(i));
 		}
 	}
-}
+}*/

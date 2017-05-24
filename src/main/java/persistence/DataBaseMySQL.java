@@ -7,16 +7,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
 import connections.DbConnection;
 import daos.DataBaseDAO;
-
+@Component
 public class DataBaseMySQL implements DataBaseDAO {
 	
 	@Autowired
+	private DbConnection dbconnection;
 	private Connection con;
 	
 	private BufferedReader br;
@@ -34,6 +36,8 @@ public class DataBaseMySQL implements DataBaseDAO {
 		    _dbName = temp[5];
 		    //In the next line I will connect to the db
 //		    con = (Connection) DbConnection.getInstance("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306", "root", "root").getConnection();
+		    dbconnection.CreateDbConnection();
+		    con = (Connection) dbconnection.getConnection();
 		    Statement st = (Statement) con.createStatement();
 		    while (line != null) {
 //		    	System.out.println(line);

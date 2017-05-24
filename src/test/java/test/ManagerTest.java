@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import logic.Manager;
+//import logic.Manager;
 import model.Actualday;
 
 public class ManagerTest {

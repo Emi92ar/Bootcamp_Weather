@@ -57,8 +57,8 @@ public class Main
 	private String temperature = "36";
 	
 	//In dat creo la base de datos si no existe, una vez que me aseguro que existe o se creo, llamo a dbConnection para conectarme a la misma
-//	@Autowired
-//	@Qualifier("dat")
+	@Autowired
+	@Qualifier("DataBaseMySQL")
 	private DataBaseMySQL dat;
 	//Los siguientes autowires son las interfaces
 //	@Autowired
@@ -66,7 +66,7 @@ public class Main
 //	private WeatherDAO actuall;
 	
 	@Autowired
-	@Qualifier("actualdayDAOImp")
+	@Qualifier("ActualdayDAOImp")
 	private WeatherDAO actuall;
 	
 //	@Autowired

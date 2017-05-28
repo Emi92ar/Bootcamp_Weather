@@ -19,6 +19,7 @@ public class DataBaseMySQL implements DataBaseDAO {
 	
 	@Autowired
 	private DbConnection dbconnection;
+	
 	private Connection con;
 	
 	private BufferedReader br;

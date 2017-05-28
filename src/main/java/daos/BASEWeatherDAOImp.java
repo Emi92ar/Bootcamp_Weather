@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.Statement;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import persistence.DataBaseMySQL;
@@ -12,9 +13,9 @@ import persistence.DataBaseMySQL;
 public abstract class BASEWeatherDAOImp {
 	
 	@Autowired
+	@Qualifier ("DataBaseMySQL")
 	protected DataBaseDAO dat;
 	
-	@Autowired
 	protected Connection con;
 	
 	public BASEWeatherDAOImp(){

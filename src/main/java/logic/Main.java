@@ -58,45 +58,39 @@ public class Main
 	
 	//In dat creo la base de datos si no existe, una vez que me aseguro que existe o se creo, llamo a dbConnection para conectarme a la misma
 	
+
+	
+//	@Autowired
+//	@Qualifier("dataBaseMySQL")
+	private DataBaseMySQL dat;
+	//Los siguientes autowires son las interfaces
+	
 	@Autowired
 	@Qualifier("actualdayDAOImp")
 	private WeatherDAO actualInyectado;
 	//aca lo que estoy haciendo es WheatherDAO actualInyectado = new ActualdayDAOImp()
 	
 	@Autowired
-	@Qualifier("dataBaseMySQL")
-	private DataBaseMySQL dat;
-	//Los siguientes autowires son las interfaces
-//	@Autowired
-//	@Qualifier("actualdayDAOImp")
-//	private WeatherDAO actuall;
-	
-	
-	
-//	@Autowired
-//	@Qualifier("atmospheree")
+	@Qualifier("atmosphereDAOImp")
 	private WeatherDAO atmospheree;	
 	
-//	@Autowired
-//	@Qualifier("astronomyy")
+	@Autowired
+	@Qualifier("astronomyDAOImp")
 	private WeatherDAO astronomyy;
 	
-//	@Autowired
-//	@Qualifier("windd")
+	@Autowired
+	@Qualifier("windDAOImp")
 	private WeatherDAO windd;
 	
-//	@Autowired
-//	@Qualifier("locationn")
+	@Autowired
+	@Qualifier("locationDAOImp")
 	private WeatherDAO locationn;
 	
-//	@Autowired
-//	@Qualifier("forecastt")		
+	@Autowired
+	@Qualifier("forecastDAOImp")		
 	private WeatherDAO forecastt;
 	
 	
-//	@Autowired
-//	@Qualifier("man")
-//	private Manager man;
 	
 	//I Use this Array to fill the information, 
 	//When I have the information of the URL, I will not need these array
@@ -180,12 +174,14 @@ public class Main
 				
 //		WeatherDAO windd = new WindDAOImp();
 		windd.Insert(wind);
-				
+		System.out.println("Hola");		
 //		WeatherDAO locationn = new LocationDAOImp();
-		locationn.Insert(locationn);
+		locationn.Insert(location);
 				
 //		WeatherDAO forecastt = new ForecastDAOImp();
 		forecastt.Insert(forecast);
+		
+		System.out.println("Termine de insertar");
 			
 //        Manager man = new Manager(location);
 //        man.setLocation(location);
@@ -196,7 +192,7 @@ public class Main
 	}
 	
 	public void PrintInformation(){
-//		dat = new DataBaseMySQL();
+		dat = new DataBaseMySQL();
 		dat.ReadBdPlacesConsulted();
 		System.out.println(actual); 
 		System.out.println(location);

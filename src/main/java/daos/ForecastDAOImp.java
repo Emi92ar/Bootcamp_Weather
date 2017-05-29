@@ -1,7 +1,8 @@
 package daos;
 import model.Day;
 import model.Forecast;
-
+import org.springframework.stereotype.Component;
+@Component
 public class ForecastDAOImp extends BASEWeatherDAOImp implements WeatherDAO{
 	
 	public void Insert(Object o){

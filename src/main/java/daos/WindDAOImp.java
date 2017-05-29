@@ -2,7 +2,8 @@ package daos;
 
 import model.Actualday;
 import model.Actualday.Wind;
-
+import org.springframework.stereotype.Component;
+@Component
 public class WindDAOImp extends BASEWeatherDAOImp implements WeatherDAO {
 
 	@Override

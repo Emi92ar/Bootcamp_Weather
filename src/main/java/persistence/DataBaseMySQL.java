@@ -14,10 +14,10 @@ import com.mysql.jdbc.Statement;
 
 import connections.DbConnection;
 import daos.DataBaseDAO;
-@Component
+//@Component
 public class DataBaseMySQL implements DataBaseDAO {
 	
-	@Autowired
+//	@Autowired
 	private DbConnection dbconnection;
 	
 	private Connection con;
@@ -36,9 +36,12 @@ public class DataBaseMySQL implements DataBaseDAO {
 		    String[] temp = line.split("\\s+");
 		    _dbName = temp[5];
 		    //In the next line I will connect to the db
-//		    con = (Connection) DbConnection.getInstance("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306", "root", "root").getConnection();
-		    dbconnection.CreateDbConnection();
-		    con = (Connection) dbconnection.getConnection();
+		    con = (Connection) DbConnection.getInstance("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306", "root", "root").getConnection();
+		    
+		    //the next two following lineas are used to spring
+//		    dbconnection.CreateDbConnection();
+//		    con = (Connection) dbconnection.getConnection();
+		    
 		    Statement st = (Statement) con.createStatement();
 		    while (line != null) {
 //		    	System.out.println(line);

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
 
-@Component
+//@Component
 public class DbConnection {
 	
 	private String _user;
@@ -15,7 +15,7 @@ public class DbConnection {
 	private String _url;
 	private String _driver;
 	
-//	private static DbConnection instance = null;
+	private static DbConnection instance = null;
 	private Connection con = null;
 	/*
 	 * Constructor of the db where
@@ -24,12 +24,28 @@ public class DbConnection {
 	 * @param _user User
 	 * @param _pwd Password
 	 */
-	public void CreateDbConnection(){
+//	public void CreateDbConnection(){
+//		try{
+//			this._driver = "com.mysql.jdbc.Driver";	//com.mysql.jdbc.Driver
+//			this._url = "jdbc:mysql://localhost:3306";			// 
+//		    this._user = "root";		// root
+//		    this._pwd = "root";			//, root
+//			Class.forName(_driver);
+//			con =  (Connection) DriverManager.getConnection(_url, _user, _pwd);
+//			if(con != null) System.out.println("Connection created");
+//    	}
+//		catch(SQLException | ClassNotFoundException e){
+//			System.out.println("Error to connect to db");
+//		}
+//	}
+	
+	private DbConnection(String driver, String url, String user, String pwd){
 		try{
-			this._driver = "com.mysql.jdbc.Driver";	//com.mysql.jdbc.Driver
-			this._url = "jdbc:mysql://localhost:3306";			// 
-		    this._user = "root";		// root
-		    this._pwd = "root";			//, root
+			this._driver = driver;	//com.mysql.jdbc.Driver
+			this._url = url;			// jdbc:mysql://localhost:3306
+		    this._user = user;		// root
+		    this._pwd = pwd;			//, root
+			
 			Class.forName(_driver);
 			con =  (Connection) DriverManager.getConnection(_url, _user, _pwd);
 			if(con != null) System.out.println("Connection created");
@@ -39,28 +55,12 @@ public class DbConnection {
 		}
 	}
 	
-//	private DbConnection(String driver, String url, String user, String pwd){
-//		try{
-//			this._driver = driver;	//com.mysql.jdbc.Driver
-//			this._url = url;			// jdbc:mysql://localhost:3306
-//		    this._user = user;		// root
-//		    this._pwd = pwd;			//, root
-//			
-//			Class.forName(_driver);
-//			con =  (Connection) DriverManager.getConnection(_url, _user, _pwd);
-//			if(con != null) System.out.println("Connection created");
-//    	}
-//		catch(SQLException | ClassNotFoundException e){
-//			System.out.println("Error to connect to db");
-//		}
-//	}
-//	
-//	public static DbConnection getInstance(String driver, String url, String user, String pwd){
-//		if(instance == null){
-//			instance = new DbConnection(driver, url, user, pwd);
-//		}
-//		return instance;
-//	}
+	public static DbConnection getInstance(String driver, String url, String user, String pwd){
+		if(instance == null){
+			instance = new DbConnection(driver, url, user, pwd);
+		}
+		return instance;
+	}
 	public Connection getConnection(){
 		return con;
 	}

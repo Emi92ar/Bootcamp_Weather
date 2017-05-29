@@ -3,27 +3,28 @@ package persistence;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
-import connections.DbConnection;
+
 import daos.DataBaseDAO;
-//@Component
+@Component
 public class DataBaseMySQL implements DataBaseDAO {
-	
-//	@Autowired
-	private DbConnection dbconnection;
+
 	
 	private Connection con;
-	
 	private BufferedReader br;
 	private String _dbName;
+	private String _driver;
+	private String _url;
+	private String _user;
+	private String _pwd;
 
 	/*
 	 * Create the Data Base if not exists and the connection with the DB
@@ -36,12 +37,11 @@ public class DataBaseMySQL implements DataBaseDAO {
 		    String[] temp = line.split("\\s+");
 		    _dbName = temp[5];
 		    //In the next line I will connect to the db
-		    con = (Connection) DbConnection.getInstance("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306", "root", "root").getConnection();
-		    
-		    //the next two following lineas are used to spring
+//		    con = (Connection) DbConnection.getInstance("com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306", "root", "root").getConnection();
 //		    dbconnection.CreateDbConnection();
 //		    con = (Connection) dbconnection.getConnection();
 		    
+		    CreateDbConnection();
 		    Statement st = (Statement) con.createStatement();
 		    while (line != null) {
 //		    	System.out.println(line);
@@ -49,6 +49,7 @@ public class DataBaseMySQL implements DataBaseDAO {
 		    	line = br.readLine();
 		    }
 		    st.close();
+		   
 		}
 		catch(FileNotFoundException ex){
 			
@@ -61,10 +62,21 @@ public class DataBaseMySQL implements DataBaseDAO {
 		}
 	}
 	
-	
-	public void CreateConnect(DbConnection dbConnection){
-		con = (Connection) dbConnection;
+	private void CreateDbConnection(){
+		try{
+			this._driver = "com.mysql.jdbc.Driver";	//com.mysql.jdbc.Driver
+			this._url = "jdbc:mysql://localhost:3306";			// 
+		    this._user = "root";		// root
+		    this._pwd = "root";			//, root
+			Class.forName(_driver);
+			con =  (Connection) DriverManager.getConnection(_url, _user, _pwd);
+			if(con != null) System.out.println("Connection created");
+    	}
+		catch(SQLException | ClassNotFoundException e){
+			System.out.println("Error to connect to db");
+		}
 	}
+	
 	
 	public void ReadBdPlacesConsulted(){
 		try{

@@ -9,16 +9,10 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 
 import model.Actualday;
-import daos.ActualdayDAOImp;
-import daos.AstronomyDAOImp;
-import daos.AtmosphereDAOImp;
-import daos.ForecastDAOImp;
-import daos.LocationDAOImp;
 import daos.WeatherDAO;
-import daos.WindDAOImp;
 import java.util.ArrayList;
 
-import model.Actualday;
+
 import model.Day;
 import model.Forecast;
 import persistence.DataBaseMySQL;
@@ -37,7 +31,6 @@ public class Main
 	private Actualday.Wind wind;
 	private Actualday.Atmosphere atmosphere;
 	private Actualday.Astronomy astronomy;
-	
 	
 	//The following field is an example how this class store the information provided by the parsed
 	private String sunrise ="19:00hs";
@@ -60,15 +53,14 @@ public class Main
 	
 
 	
-//	@Autowired
-//	@Qualifier("dataBaseMySQL")
+	@Autowired
+	@Qualifier("dataBaseMySQL")
 	private DataBaseMySQL dat;
 	//Los siguientes autowires son las interfaces
 	
 	@Autowired
 	@Qualifier("actualdayDAOImp")
 	private WeatherDAO actualInyectado;
-	//aca lo que estoy haciendo es WheatherDAO actualInyectado = new ActualdayDAOImp()
 	
 	@Autowired
 	@Qualifier("atmosphereDAOImp")
@@ -174,7 +166,7 @@ public class Main
 				
 //		WeatherDAO windd = new WindDAOImp();
 		windd.Insert(wind);
-		System.out.println("Hola");		
+		
 //		WeatherDAO locationn = new LocationDAOImp();
 		locationn.Insert(location);
 				
@@ -192,7 +184,7 @@ public class Main
 	}
 	
 	public void PrintInformation(){
-		dat = new DataBaseMySQL();
+//		dat = new DataBaseMySQL();
 		dat.ReadBdPlacesConsulted();
 		System.out.println(actual); 
 		System.out.println(location);

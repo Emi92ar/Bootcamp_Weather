@@ -8,21 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import persistence.DataBaseMySQL;
 
-
-//@Component
+@Component
 public abstract class BASEWeatherDAOImp {
 	
-//	@Autowired
-//	@Qualifier ("dataBaseMySQL")
+	@Autowired
+	@Qualifier ("dataBaseMySQL")
 	protected DataBaseDAO dat;
-	
 	protected Connection con;
-	
-	public BASEWeatherDAOImp(){
-		dat = new DataBaseMySQL();
-	}
+
 	
 	public void InsertGeneric(String insertImpl){
 		try{

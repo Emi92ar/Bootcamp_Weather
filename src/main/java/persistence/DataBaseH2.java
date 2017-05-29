@@ -7,21 +7,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.h2.tools.DeleteDbFiles;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-import connections.DbConnection;
+//import connections.DbConnection;
 import daos.DataBaseDAO;
 
 import java.sql.Statement;
 import java.sql.Connection;
+import java.sql.DriverManager;
 //@Component 
 public class DataBaseH2 implements DataBaseDAO {
 	private Connection con;
 	private BufferedReader br;
 	private String _dbName;
-//	@Autowired
-	private DbConnection connection;
+	private String _driver;
+	private String _url;
+	private String _user;
+	private String _pwd;
 	/*
 	 * Data Base to test the logic
 	 */
@@ -33,7 +34,9 @@ public class DataBaseH2 implements DataBaseDAO {
 		    //In the next line I will connect to the db
 //		    con = DbConnection.getInstance("org.h2.Driver", "jdbc:h2:~/weatherr", "root", "root").getConnection();
 //		    Statement st = (Statement) con.createStatement();
-		    Statement st = (Statement) connection.getConnection().createStatement();
+		    CreateDbConnection();
+		    Statement st = (Statement) con.createStatement();
+//		    Statement st = (Statement) connection.getConnection().createStatement();
 		    String[] temp = line.split("\\s+");
 		    _dbName = temp[5];
 		    //Skip the first two lines of the script because they are to create the database and use 
@@ -58,6 +61,20 @@ public class DataBaseH2 implements DataBaseDAO {
 		}
 	}
 	
+	private void CreateDbConnection(){
+		try{
+			this._driver = "com.mysql.jdbc.Driver";	//com.mysql.jdbc.Driver
+			this._url = "jdbc:mysql://localhost:3306";			// 
+		    this._user = "root";		// root
+		    this._pwd = "root";			//, root
+			Class.forName(_driver);
+			con =  (Connection) DriverManager.getConnection(_url, _user, _pwd);
+			if(con != null) System.out.println("Connection created");
+    	}
+		catch(SQLException | ClassNotFoundException e){
+			System.out.println("Error to connect to db");
+		}
+	}
 	
 	public void ReadBdPlacesConsulted(){
 		try{

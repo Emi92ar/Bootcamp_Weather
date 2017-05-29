@@ -57,17 +57,21 @@ public class Main
 	private String temperature = "36";
 	
 	//In dat creo la base de datos si no existe, una vez que me aseguro que existe o se creo, llamo a dbConnection para conectarme a la misma
+	
 	@Autowired
-	@Qualifier("DataBaseMySQL")
+	@Qualifier("actualdayDAOImp")
+	private WeatherDAO actualInyectado;
+	//aca lo que estoy haciendo es WheatherDAO actualInyectado = new ActualdayDAOImp()
+	
+	@Autowired
+	@Qualifier("dataBaseMySQL")
 	private DataBaseMySQL dat;
 	//Los siguientes autowires son las interfaces
 //	@Autowired
 //	@Qualifier("actualdayDAOImp")
 //	private WeatherDAO actuall;
 	
-	@Autowired
-	@Qualifier("ActualdayDAOImp")
-	private WeatherDAO actuall;
+	
 	
 //	@Autowired
 //	@Qualifier("atmospheree")
@@ -166,7 +170,7 @@ public class Main
 				
 		//The followings created they should be implemented using spring 
 //		WeatherDAO actuall = new ActualdayDAOImp();
-		actuall.Insert(actual);
+		actualInyectado.Insert(actual);
 				
 //		WeatherDAO atmospheree = new AtmosphereDAOImp();
 		atmospheree.Insert(atmosphere);

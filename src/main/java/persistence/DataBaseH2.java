@@ -15,12 +15,12 @@ import daos.DataBaseDAO;
 
 import java.sql.Statement;
 import java.sql.Connection;
-@Component 
+//@Component 
 public class DataBaseH2 implements DataBaseDAO {
 	private Connection con;
 	private BufferedReader br;
 	private String _dbName;
-	@Autowired
+//	@Autowired
 	private DbConnection connection;
 	/*
 	 * Data Base to test the logic

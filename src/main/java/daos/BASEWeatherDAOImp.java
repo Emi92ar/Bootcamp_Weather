@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import persistence.DataBaseMySQL;
+
 @Component
 public abstract class BASEWeatherDAOImp {
 	

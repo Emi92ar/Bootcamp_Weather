@@ -13,7 +13,4 @@
 <!-- declares explicit support for annotation-driven MVC controllers (i.e. @RequestMapping, @Controller -->
     <mvc:annotation-driven/>
     <context:component-scan base-package="src.main.java.controller" />
-
-
-
 </beans>

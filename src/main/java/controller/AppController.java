@@ -22,6 +22,6 @@ public class AppController {
 	
 	@RequestMapping(value = "/location/{namelocation}", method=RequestMethod.GET)
     public String getweather (@PathVariable("namelocation") String namelocation)  {
-        return "funciona el get";
+        return namelocation+"funciona el get";
     }
 }

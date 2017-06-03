@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AppController {
 
 	
-	@RequestMapping("/")
+	@RequestMapping(value = {"/", "/welcome**"}, method = RequestMethod.GET)
     public String bienvenida () {
         return "HOME PAGE by Emi";
     }

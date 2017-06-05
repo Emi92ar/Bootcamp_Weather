@@ -93,10 +93,10 @@ public class Main
 	
     public static void main( String[] args )
     {	
-    	ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-        Main main =  context.getBean(Main.class);
-    	main.startApp(args);    
-    	main.PrintInformation();
+//    	ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
+//        Main main =  context.getBean(Main.class);
+//    	main.startApp(args);    
+//    	main.PrintInformation();
     }
 	
 	public void startApp(String[] args){

@@ -6,6 +6,19 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
   <artifactId>bootcamp_weather</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <name>bootcamp_weather</name>
+  <packaging>war</packaging>
+  
+  <distributionManagement>
+    <repository>
+      <uniqueVersion>false</uniqueVersion>
+      <id>ID_Deploy</id>
+      <name>bootcamp_weather Deploy</name>
+      <url>file:///C:\Users\emibe</url>
+      <layout>default</layout>
+    </repository>
+  </distributionManagement>
+  
+  
   
   <dependencies>
     	<dependency>
@@ -65,6 +78,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		    <artifactId>spring-expression</artifactId>
 		    <version>4.3.8.RELEASE</version>
 		</dependency>
+		
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
 		<dependency>
 		    <groupId>org.springframework</groupId>
@@ -72,13 +86,21 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 		    <version>4.3.8.RELEASE</version>
 		</dependency>
 		 <!-- https://mvnrepository.com/artifact/org.apache.tomcat.maven/tomcat7-maven-plugin -->
-		 <dependency>
-            <groupId>org.apache.tomcat.maven</groupId>
-            <artifactId>tomcat7-maven-plugin</artifactId>
-            <version>2.2</version>
-        </dependency>
+<!-- 		 <dependency> -->
+<!--             <groupId>org.apache.tomcat.maven</groupId> -->
+<!--             <artifactId>tomcat7-maven-plugin</artifactId> -->
+<!--             <version>2.2</version> -->
+<!--         </dependency> -->
 		
-		
+		<!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-catalina -->
+		<dependency>
+		    <groupId>org.apache.tomcat</groupId>
+		    <artifactId>tomcat-catalina</artifactId>
+		    <version>7.0.78</version>
+		    <scope>provided</scope>
+		</dependency>
+
+
   	</dependencies>
 
 	<build>
@@ -92,15 +114,12 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 				</configuration>
 			</plugin>
 			
-			<plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.2</version>
-            </plugin>
+<!-- 			<plugin> -->
+<!--                 <groupId>org.apache.tomcat.maven</groupId> -->
+<!--                 <artifactId>tomcat7-maven-plugin</artifactId> -->
+<!--                 <version>2.2</version> -->
+<!--             </plugin> -->
 		</plugins>
-		
-		
 	</build>
-  
-	<packaging>war</packaging>
+	
 </project>
